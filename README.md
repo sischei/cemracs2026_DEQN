@@ -87,10 +87,10 @@ participants who wish to run the notebooks on their own machines.
 
 | Time | Topic | Materials |
 |------|-------|-----------|
-| 16:00 – 17:30 | Introduction to Deep Equilibrium Nets (DEQNs): solving dynamic stochastic economic models by approximating equilibrium functions with neural networks and minimizing equilibrium (Euler) residuals | Slides: [`01_DeepEquilibriumNets`](lectures/lecture_1/slides/01_DeepEquilibriumNets.pdf)<br>Notebooks: [`01_Brock_Mirman_DEQN`](lectures/lecture_1/code/01_Brock_Mirman_DEQN.ipynb), [`02_Brock_Mirman_Uncertainty_DEQN`](lectures/lecture_1/code/02_Brock_Mirman_Uncertainty_DEQN.ipynb) |
+| 16:00 – 17:30 | Introduction to Deep Equilibrium Nets (DEQNs): solving dynamic stochastic economic models by approximating equilibrium functions with neural networks and minimizing equilibrium (Euler) residuals | Slides: [`01_DeepEquilibriumNets`](lectures/lecture_1/slides/01_DeepEquilibriumNets.pdf)<br>Notebooks: [`01_Brock_Mirman_1972_DEQN`](lectures/lecture_1/code/01_Brock_Mirman_1972_DEQN.ipynb), [`02_Brock_Mirman_Uncertainty_DEQN`](lectures/lecture_1/code/02_Brock_Mirman_Uncertainty_DEQN.ipynb)<br>Extended materials: NAS & loss normalization (see [Materials by Lecture](#lecture-1--deep-equilibrium-nets)) |
 
 #### Practical Session 1 — Tuesday, July 14th (17:30–19:00)
-**Hands-on DEQN** *(Maria Pia Lombardo)* — guided implementation and exercises building on Lecture 1. Materials: [`lectures/lecture_1/code/`](lectures/lecture_1/code/)
+**Hands-on DEQN** *(Maria Pia Lombardo)* — guided implementation and exercises building on Lecture 1. Materials: exercise notebooks [`03_DEQN_Exercises_Blanks`](lectures/lecture_1/code/03_DEQN_Exercises_Blanks.ipynb) / [`04_DEQN_Exercises_Solutions`](lectures/lecture_1/code/04_DEQN_Exercises_Solutions.ipynb), plus [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/05_StochasticBM_LossComparison.ipynb) and the extended NAS/loss notebooks in [`lectures/lecture_1/code/`](lectures/lecture_1/code/)
 
 ### Lecture 2 (Part II) — Wednesday, July 15th (11:00–12:30)
 **Solving the DICE Model with DEQN, and Surrogate Methods**
@@ -167,8 +167,28 @@ which participants implement and extend the methods themselves.
 
 | # | Notebook | Topic |
 |---|----------|-------|
-| 01 | [`01_Brock_Mirman_DEQN`](lectures/lecture_1/code/01_Brock_Mirman_DEQN.ipynb) | DEQN: deterministic Brock-Mirman (1972) growth model |
-| 02 | [`02_Brock_Mirman_Uncertainty_DEQN`](lectures/lecture_1/code/02_Brock_Mirman_Uncertainty_DEQN.ipynb) | DEQN: stochastic Brock-Mirman with uncertainty |
+| 01 | [`01_Brock_Mirman_1972_DEQN`](lectures/lecture_1/code/01_Brock_Mirman_1972_DEQN.ipynb) | DEQN: deterministic Brock-Mirman (1972) growth model, exogenous state sampling |
+| 02 | [`02_Brock_Mirman_Uncertainty_DEQN`](lectures/lecture_1/code/02_Brock_Mirman_Uncertainty_DEQN.ipynb) | DEQN: stochastic Brock-Mirman with AR(1) TFP uncertainty, Gauss-Hermite quadrature, simulated-path sampling |
+| 03 | [`03_DEQN_Exercises_Blanks`](lectures/lecture_1/code/03_DEQN_Exercises_Blanks.ipynb) | **Exercise (blanks):** stochastic BM, endogenous labor, occasionally binding constraints (KKT + Fischer-Burmeister), a small OLG model |
+| 04 | [`04_DEQN_Exercises_Solutions`](lectures/lecture_1/code/04_DEQN_Exercises_Solutions.ipynb) | **Exercise (solutions)** for notebook 03 |
+| 05 | [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/05_StochasticBM_LossComparison.ipynb) | Loss-kernel comparison (MSE / MAE / Huber / pinball / CVaR / LogCosh) on stochastic Brock-Mirman |
+
+#### Extended / Auxiliary Materials
+
+Optional self-study materials on hyperparameter/architecture search and
+multi-objective loss balancing for DEQN training — not required for the core
+lecture.
+
+| # | Slide Deck | Topic |
+|---|------------|-------|
+| 02 | [`02_Neural_Architecture_Search`](lectures/lecture_1/slides/02_Neural_Architecture_Search.pdf) | Neural Architecture Search: random search and Hyperband for DEQN architectures |
+| 03 | [`03_Loss_Normalization`](lectures/lecture_1/slides/03_Loss_Normalization.pdf) | Loss normalization: ReLoBRaLo and gradient-conflict mitigation in multi-equation residual losses |
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 06 | [`06_NAS_Random_Search_10D`](lectures/lecture_1/code/06_NAS_Random_Search_10D.ipynb) | Random-search NAS on a 10-D regression |
+| 07 | [`07_NAS_RandomSearch_Hyperband`](lectures/lecture_1/code/07_NAS_RandomSearch_Hyperband.ipynb) | Random search and successive halving (Hyperband) implemented from scratch |
+| 08 | [`08_Loss_Normalization`](lectures/lecture_1/code/08_Loss_Normalization.ipynb) | Multi-component loss balancing (ReLoBRaLo) |
 
 #### Readings
 
