@@ -90,24 +90,30 @@ participants who wish to run the notebooks on their own machines.
 | 16:00 – 17:30 | Introduction to Deep Equilibrium Nets (DEQNs): solving dynamic stochastic economic models by approximating equilibrium functions with neural networks and minimizing equilibrium (Euler) residuals | Slides: [`01_DeepEquilibriumNets`](lectures/lecture_1/slides/01_DeepEquilibriumNets.pdf)<br>Notebooks: [`01_Brock_Mirman_1972_DEQN`](lectures/lecture_1/code/01_Brock_Mirman_1972_DEQN.ipynb), [`02_Brock_Mirman_Uncertainty_DEQN`](lectures/lecture_1/code/02_Brock_Mirman_Uncertainty_DEQN.ipynb)<br>Extended materials: NAS & loss normalization (see [Materials by Lecture](#lecture-1--deep-equilibrium-nets)) |
 
 #### Practical Session 1 — Tuesday, July 14th (17:30–19:00)
-**Hands-on DEQN** *(Maria Pia Lombardo)* — guided implementation and exercises building on Lecture 1. Materials: exercise notebooks [`03_DEQN_Exercises_Blanks`](lectures/lecture_1/code/03_DEQN_Exercises_Blanks.ipynb) / [`04_DEQN_Exercises_Solutions`](lectures/lecture_1/code/04_DEQN_Exercises_Solutions.ipynb), plus [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/05_StochasticBM_LossComparison.ipynb) and the extended NAS/loss notebooks in [`lectures/lecture_1/code/`](lectures/lecture_1/code/)
+**Hands-on DEQN** *(Maria Pia Lombardo)* — guided implementation in two steps:
+
+1. **Step 1 — DEQN exercises (Brock-Mirman).** Fill in the blanks notebook [`03_DEQN_Exercises_Blanks`](lectures/lecture_1/code/03_DEQN_Exercises_Blanks.ipynb) (solutions: [`04_DEQN_Exercises_Solutions`](lectures/lecture_1/code/04_DEQN_Exercises_Solutions.ipynb)): endogenous labor, occasionally binding constraints (KKT + Fischer-Burmeister), a small OLG model.
+2. **Step 2 — The IRBC model.** Move to the first large-scale nonlinear DSGE application of DEQNs — slides [`04_IRBC`](lectures/lecture_1/slides/04_IRBC.pdf), notebooks [`09_IRBC_DEQN_smooth`](lectures/lecture_1/code/09_IRBC_DEQN_smooth.ipynb) and [`10_IRBC_DEQN_irreversible`](lectures/lecture_1/code/10_IRBC_DEQN_irreversible.ipynb). See [Hands-on Exercise Session — IRBC](#hands-on-exercise-session--irbc-second-step) below.
+
+Further self-study: [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/05_StochasticBM_LossComparison.ipynb) and the extended NAS/loss notebooks in [`lectures/lecture_1/code/`](lectures/lecture_1/code/).
 
 ### Lecture 2 (Part II) — Wednesday, July 15th (11:00–12:30)
-**Solving the DICE Model with DEQN, and Surrogate Methods**
+**Surrogate Methods, Structural Estimation, and the DICE Model**
 
 | Time | Topic | Materials |
 |------|-------|-----------|
-| 11:00 – 12:30 | Solving the DICE integrated assessment model with DEQNs; surrogate models and Gaussian process regression (GPR) for high-dimensional dynamic programming and estimation | Slides: [`02_DICE_and_Surrogates`](lectures/lecture_2/slides/02_DICE_and_Surrogates.pdf)<br>Notebooks: [`01_DICE_DEQN`](lectures/lecture_2/code/01_DICE_DEQN.ipynb), [`02_GP_Regression`](lectures/lecture_2/code/02_GP_Regression.ipynb), [`03_Surrogate_Models`](lectures/lecture_2/code/03_Surrogate_Models.ipynb) |
+| 11:00 – 11:45 | **Part 1** — Surrogate models, Gaussian process regression (GPR), Bayesian active learning, and deep kernel learning; surrogate-based structural estimation (SMM) on the Brock-Mirman model from Lecture 1 | Slides: [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf)<br>Notebooks: [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb), [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb), [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb) |
+| 11:45 – 12:30 | **Part 2** — The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3 | Slides: [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf)<br>Notebooks: [`05_DICE_DEQN`](lectures/lecture_2/code/05_DICE_DEQN.ipynb), [`06_Stochastic_DICE_DEQN`](lectures/lecture_2/code/06_Stochastic_DICE_DEQN.ipynb) |
 
 ### Lecture 3 (Part III) — Wednesday, July 15th (16:00–17:30)
 **Deep Uncertainty Quantification and Optimal Taxation**
 
 | Time | Topic | Materials |
 |------|-------|-----------|
-| 16:00 – 17:30 | Deep uncertainty quantification (Deep UQ) for stochastic IAMs; computing constrained optimal carbon tax rules with deep surrogates | Slides: [`03_DeepUQ_and_Optimal_Taxation`](lectures/lecture_3/slides/03_DeepUQ_and_Optimal_Taxation.pdf)<br>Notebooks: [`01_Deep_UQ`](lectures/lecture_3/code/01_Deep_UQ.ipynb), [`02_Optimal_Carbon_Tax`](lectures/lecture_3/code/02_Optimal_Carbon_Tax.ipynb) |
+| 16:00 – 17:30 | Opens with a short deep-surrogate / GP recap (from Lecture 2 Part 1), then: deep uncertainty quantification (Deep UQ) for stochastic IAMs; computing constrained optimal carbon tax rules with deep surrogates, applied to the DICE model from Lecture 2 Part 2 | Slides: [`03_DeepUQ_and_Optimal_Taxation`](lectures/lecture_3/slides/03_DeepUQ_and_Optimal_Taxation.pdf)<br>Notebooks: [`01_Deep_UQ`](lectures/lecture_3/code/01_Deep_UQ.ipynb), [`02_Optimal_Carbon_Tax`](lectures/lecture_3/code/02_Optimal_Carbon_Tax.ipynb) |
 
 #### Practical Session 2 — Wednesday, July 15th (17:30–19:00)
-**Hands-on DICE / Surrogates / UQ** *(Maria Pia Lombardo)* — guided exercises building on Lectures 2 and 3. Materials: [`lectures/lecture_2/code/`](lectures/lecture_2/code/), [`lectures/lecture_3/code/`](lectures/lecture_3/code/)
+**Hands-on Surrogates / DICE / UQ** *(Maria Pia Lombardo)* — guided exercises building on Lectures 2 and 3. Materials: [`lectures/lecture_2/code/`](lectures/lecture_2/code/), [`lectures/lecture_3/code/`](lectures/lecture_3/code/)
 
 ## Course Overview
 
@@ -118,8 +124,9 @@ science to solve, estimate, and quantify uncertainty in dynamic stochastic
 economic models, with a focus on climate economics. It covers:
 
 - Deep Equilibrium Nets (DEQNs) for dynamic stochastic models
-- The DICE integrated assessment model, solved globally with DEQNs
 - Gaussian Process Regression (GPR) and deep surrogate models
+- Surrogate-based structural estimation (SMM)
+- The DICE integrated assessment model, solved globally with DEQNs
 - Deep Uncertainty Quantification (Deep UQ) for stochastic IAMs
 - Constrained optimal carbon taxation via deep surrogates
 
@@ -129,14 +136,18 @@ economic models, with a focus on climate economics. It covers:
 technique that represents equilibrium policy functions with neural networks and
 trains them to minimize equilibrium-condition (Euler) residuals.
 
-**Lecture 2** applies DEQNs to the climate–economy problem — solving the DICE
-integrated assessment model — and introduces surrogate methods (Gaussian
-process regression and deep surrogates) for high-dimensional dynamic
-programming and structural estimation.
+**Lecture 2** adds a second toolkit and the central application, in two parts.
+*Part 1* introduces surrogate methods — Gaussian process regression, deep
+surrogates, and Bayesian active learning — and surrogate-based structural
+estimation (SMM), demonstrated on the same Brock–Mirman model from Lecture 1.
+*Part 2* then brings in the climate–economy application: the DICE integrated
+assessment model, solved globally with DEQNs (deterministic and stochastic
+CDICE). DICE is introduced here and rides continuously into Lecture 3.
 
-**Lecture 3** closes with the estimation-and-uncertainty layer: deep
-uncertainty quantification for stochastic IAMs and the computation of
-constrained optimal carbon tax rules with deep surrogates.
+**Lecture 3** is the synthesis on the DICE model. After a short recap of the
+deep-surrogate / GP toolkit from Lecture 2 Part 1, it develops deep uncertainty
+quantification for stochastic IAMs and the computation of constrained optimal
+carbon tax rules with deep surrogates.
 
 ### Teaching Format
 
@@ -173,6 +184,22 @@ which participants implement and extend the methods themselves.
 | 04 | [`04_DEQN_Exercises_Solutions`](lectures/lecture_1/code/04_DEQN_Exercises_Solutions.ipynb) | **Exercise (solutions)** for notebook 03 |
 | 05 | [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/05_StochasticBM_LossComparison.ipynb) | Loss-kernel comparison (MSE / MAE / Huber / pinball / CVaR / LogCosh) on stochastic Brock-Mirman |
 
+#### Hands-on Exercise Session — IRBC (second step)
+
+The Lecture 1 practical session works in two steps: first the DEQN exercise
+blanks (notebook 03 above), then the **International Real Business Cycle (IRBC)**
+model — the first large-scale nonlinear DSGE application of DEQNs (2N-dimensional
+state space; N Euler equations plus a world resource constraint).
+
+| # | Slide Deck | Topic |
+|---|------------|-------|
+| 04 | [`04_IRBC`](lectures/lecture_1/slides/04_IRBC.pdf) | IRBC with DEQNs: model, simulated-state training, steady-state recovery, Euler-residual diagnostics, comparative statics |
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 09 | [`09_IRBC_DEQN_smooth`](lectures/lecture_1/code/09_IRBC_DEQN_smooth.ipynb) | Smooth benchmark IRBC: persistent-simulation training, time-invariance and zero-shock steady-state diagnostics |
+| 10 | [`10_IRBC_DEQN_irreversible`](lectures/lecture_1/code/10_IRBC_DEQN_irreversible.ipynb) | Irreversible-investment extension: KKT multipliers and a Fischer-Burmeister complementarity loss |
+
 #### Extended / Auxiliary Materials
 
 Optional self-study materials on hyperparameter/architecture search and
@@ -196,29 +223,46 @@ lecture.
 |---------|-------------|
 | [`Azinovic_Gaegauf_Scheidegger_2022_DEQN.pdf`](lectures/lecture_1/readings/Azinovic_Gaegauf_Scheidegger_2022_DEQN.pdf) | Azinovic, Gaegauf & Scheidegger (2022). Deep Equilibrium Nets. *International Economic Review* 63(4), 1471-1525 |
 
-### Lecture 2 — DICE with DEQN, and Surrogate Methods
+### Lecture 2 — Surrogate Methods, Structural Estimation, and the DICE Model
 
 #### Slides
 
 | # | Slide Deck | Topic |
 |---|------------|-------|
-| 02 | [`02_DICE_and_Surrogates`](lectures/lecture_2/slides/02_DICE_and_Surrogates.pdf) | Solving DICE with DEQNs; Gaussian processes and deep surrogate models |
+| 02 | [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf) | **Part 1** — Surrogate models and Gaussian processes: deep surrogates, GP regression, Bayesian active learning, deep kernel learning; applications to structural estimation, UQ, and optimal policy |
+| 03 | [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf) | **Part 2** — Solving the DICE integrated assessment model with DEQNs |
 
 #### Notebooks
 
+**Part 1 — Surrogates & GPs:**
+
 | # | Notebook | Topic |
 |---|----------|-------|
-| 01 | [`01_DICE_DEQN`](lectures/lecture_2/code/01_DICE_DEQN.ipynb) | Solving the DICE integrated assessment model with DEQNs |
-| 02 | [`02_GP_Regression`](lectures/lecture_2/code/02_GP_Regression.ipynb) | Gaussian Process Regression for function approximation |
-| 03 | [`03_Surrogate_Models`](lectures/lecture_2/code/03_Surrogate_Models.ipynb) | Deep surrogate models for dynamic programming and estimation |
+| 01 | [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb) | Deep surrogate primer: a Black-Scholes implied-volatility surrogate |
+| 02 | [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb) | Gaussian-process regression from scratch + Bayesian active learning |
+| 03 | [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb) | Deep kernel learning: a neural feature extractor with a GP head |
+
+**Part 1 (structural estimation) & Part 2 (DICE)** — *to be added:*
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 04 | [`04_Structural_Estimation_BM`](lectures/lecture_2/code/04_Structural_Estimation_BM.ipynb) | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
+| 05 | [`05_DICE_DEQN`](lectures/lecture_2/code/05_DICE_DEQN.ipynb) | Solving the deterministic DICE integrated assessment model with DEQNs |
+| 06 | [`06_Stochastic_DICE_DEQN`](lectures/lecture_2/code/06_Stochastic_DICE_DEQN.ipynb) | Stochastic CDICE-DEQN with Gauss-Hermite quadrature |
 
 #### Readings
 
 | Reading | Description |
 |---------|-------------|
-| [`CDICE_Restud_production.pdf`](lectures/lecture_2/readings/CDICE_Restud_production.pdf) | Folini, Friedl, Kuebler & Scheidegger (2024). The Climate in Climate Economics. *Review of Economic Studies* |
 | [`ML_HighDim_JCS.pdf`](lectures/lecture_2/readings/ML_HighDim_JCS.pdf) | Scheidegger & Bilionis (2019). Machine Learning for High-Dimensional Dynamic Stochastic Economies. *Journal of Computational Science* 33, 68-82 |
 | [`DeepSurrogates_JFE.pdf`](lectures/lecture_2/readings/DeepSurrogates_JFE.pdf) | Chen, Didisheim & Scheidegger (2026). Deep Surrogates for Finance: With an Application to Option Pricing. *Journal of Financial Economics* |
+| [`CDICE_Restud_production.pdf`](lectures/lecture_2/readings/CDICE_Restud_production.pdf) | Folini, Friedl, Kuebler & Scheidegger (2024). The Climate in Climate Economics. *Review of Economic Studies* |
+| [Building Interpretable Climate Emulators (EJ)](https://academic.oup.com/ej/article-abstract/136/677/1870/8373818) | Folini, Friedl, Kuebler & Scheidegger (2026). Building Interpretable Climate Emulators for Economics. *The Economic Journal* 136(677), 1870 |
+
+**Companion code repositories** (for the DICE / climate part):
+
+- [`ClimateChangeEcon/Climate_in_Climate_Economics`](https://github.com/ClimateChangeEcon/Climate_in_Climate_Economics) — CDICE reference code accompanying Folini et al. (2024, *RESTUD*).
+- [`ClimateChangeEcon/Building_Interpretable_Climate_Emulators_forEconomics`](https://github.com/ClimateChangeEcon/Building_Interpretable_Climate_Emulators_forEconomics) — code (and paper) for the interpretable climate emulators (Folini et al., 2026, *The Economic Journal*).
 
 ### Lecture 3 — Deep Uncertainty Quantification and Optimal Taxation
 
@@ -242,11 +286,16 @@ lecture.
 | [`DeepUQ_with_an_application_to_IAM.pdf`](lectures/lecture_3/readings/DeepUQ_with_an_application_to_IAM.pdf) | Friedl, Kuebler, Scheidegger & Usui (2023). Deep Uncertainty Quantification: With an Application to Integrated Assessment Models |
 | [`JPE_Macro.pdf`](lectures/lecture_3/readings/JPE_Macro.pdf) | Kuebler, Scheidegger & Surbek (2026). Using Machine Learning to Compute Constrained Optimal Carbon Tax Rules. *Journal of Political Economy: Macroeconomics*, forthcoming |
 
+**Companion code repository** (constrained optimal carbon taxes):
+
+- [`sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules`](https://github.com/sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules) — replication code for Kuebler, Scheidegger & Surbek (2026, *JPE: Macroeconomics*).
+
 ## References
 
 - Azinovic, M., Gaegauf, L., & Scheidegger, S. (2022). Deep Equilibrium Nets. *International Economic Review*, 63(4), 1471-1525. (available in `lectures/lecture_1/readings/`)
 - Chen, H., Didisheim, A., & Scheidegger, S. (2026). Deep Surrogates for Finance: With an Application to Option Pricing. *Journal of Financial Economics*, 177, 104222. (available in `lectures/lecture_2/readings/`)
 - Folini, D., Friedl, A., Kuebler, F., & Scheidegger, S. (2024). The Climate in Climate Economics. *Review of Economic Studies*. (available in `lectures/lecture_2/readings/`)
+- Folini, D., Friedl, A., Kuebler, F., & Scheidegger, S. (2026). Building Interpretable Climate Emulators for Economics. *The Economic Journal*, 136(677), 1870. [Article](https://academic.oup.com/ej/article-abstract/136/677/1870/8373818) · [Code](https://github.com/ClimateChangeEcon/Building_Interpretable_Climate_Emulators_forEconomics)
 - Friedl, A., Kuebler, F., Scheidegger, S., & Usui, T. (2023). Deep Uncertainty Quantification: With an Application to Integrated Assessment Models. (available in `lectures/lecture_3/readings/`)
 - Kuebler, F., Scheidegger, S., & Surbek, O. (2026). Using Machine Learning to Compute Constrained Optimal Carbon Tax Rules. *Journal of Political Economy: Macroeconomics*, forthcoming. (available in `lectures/lecture_3/readings/`)
 - Scheidegger, S. & Bilionis, I. (2019). Machine Learning for High-Dimensional Dynamic Stochastic Economies. *Journal of Computational Science*, 33, 68-82. (available in `lectures/lecture_2/readings/`)

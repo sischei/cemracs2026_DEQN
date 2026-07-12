@@ -1,0 +1,1049 @@
+% Filename: Stochastic ECS.tex
+% Author(s): Doris Folini, Felix Kuebler, Aleksandra Malova, Simon Scheidegger
+% E-mail: malova.alex@gmail.com
+% Description:
+%
+\documentclass[11pt, a4paper, pdftex, twoside, dvipsnames]{article}
+% font:
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{bm}  % From amsmath, a bold font
+\newcommand{\argmax}{\mathop{\rm arg~max}\limits}
+\newtheorem{them}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{defn}{Definition}
+\everymath{\displaystyle}
+\allowdisplaybreaks
+\usepackage{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{newtxtext,newtxmath}
+\usepackage[title]{appendix}
+\usepackage{epigraph}
+\usepackage[ruled]{algorithm2e}
+
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+\typeout{(#1)}% latexmk will find this if $recorder=0
+% however, in that case, it will ignore #1 if it is a .aux or 
+% .pdf file etc and it exists! If it doesn't exist, it will appear 
+% in the list of dependents regardless)
+%
+% Write the following if you want it to appear in \listfiles 
+% --- although not really necessary and latexmk doesn't use this
+%
+\@addtofilelist{#1}
+%
+% latexmk will find this message if #1 doesn't exist (yet)
+\IfFileExists{#1}{}{\typeout{No file #1.}}
+}\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+\externaldocument{#1}%
+\addFileDependency{#1.tex}%
+\addFileDependency{#1.aux}%
+}
+
+% --------------------------------------------------------------------------- %
+% figure:
+% \usepackage[labelfont=bf,justification=centering]{caption}
+\usepackage[labelfont=bf]{caption}
+\captionsetup[figure]{name=Fig.,labelsep=space}
+\captionsetup[table]{name=Table\ ,labelsep=space,font=normal}
+\usepackage{subcaption}
+%\usepackage{subfig}
+% \subcaption with {}:
+\captionsetup{subrefformat=parens}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{graphicx}  % remove 'demo' option for your real document
+\usepackage[section]{placeins}
+\usepackage{comment}
+
+% --------------------------------------------------------------------------- %
+% table
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{blkarray}
+\usepackage{booktabs}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{longtable, array}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+% --------------------------------------------------------------------------- %
+% necessary usepackage
+\usepackage[x11names]{xcolor}
+% Hyperref:
+\usepackage[bookmarks=false, bookmarksnumbered=true,
+colorlinks=true,setpagesize=false,
+pdftitle={},pdfauthor={TakafumiUsui},pdfsubject={},
+pdfkeywords={}, bookmarkstype=toc, urlcolor=black, citecolor=blue,
+linkcolor=black, filecolor=black]{hyperref}
+\usepackage{indentfirst}
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex} 
+\usepackage{enumitem}
+\usepackage{cases}
+\usepackage{url}
+\usepackage{setspace}
+% \singlespacing
+% \doublespacing
+\setstretch{1}
+\usepackage{ulem}
+\usepackage{lscape}
+\usepackage{here}
+\usepackage{authblk}
+\usepackage{framed}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{cleveref}
+\crefname{equation}{Eq.}{Eqs.}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefname{line}{Algorithm}{Algorithms}
+\crefname{asmp}{Assumption}{Assumptions}
+\crefname{section}{Section}{Sections}
+\crefname{chapter}{Chapter}{Chapters}
+\crefname{appsec}{Appendix}{Appendixes}
+\let\normalref\ref
+\renewcommand{\ref}{\cref}
+\newcommand{\dtr}{\mathcal{D}_{\text{train}}}
+
+\usepackage{subcaption}
+% \subcaption with {}:
+\captionsetup{subrefformat=parens}
+
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\nn}{\mathcal{N}_{\bm{\nu}}}
+\newcommand{\brho}{\bm{\rho}}
+\newcommand{\lr}{\alpha^{\text{learn}}}
+\newcommand{\bnu}{\bm{\nu}}
+\newcommand{\bmu}{\bm{\mu}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\g}{\mathbf{g}}
+\newcommand{\m}{\mathbf{m}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\nnp}{\mathcal{N}^{\text{p}}_{\bm{\rho_\text{p}}}}
+\newcommand{\nnid}{\mathcal{N}^{\text{id}}_{\bm{\rho_{\text{id}}}}}
+\newcommand{\kb}{\mathbf{k}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bd}{\mathbf{d}}
+ 
+\newcommand{\fixmeAlex}[1]{\textbf{\emph{\textcolor{green}{/* TBD Alex: #1 */}}}}
+\newcommand{\fixmeSimon}[1]{\textbf{\emph{\textcolor{blue}{/* TBD Simon: #1 */}}}}
+\newcommand{\fixmeFelix}[1]{\textbf{\emph{\textcolor{red}{/* TBD Felix: #1 */}}}}
+\newcommand{\fixmeDoris}[1]{\textbf{\emph{\textcolor{magenta}{/* TBD Doris: #1 */}}}}
+\newcommand{\Question}[1]{\textbf{\emph{\textcolor{red}{/* Question to all: #1 */}}}}
+
+% --------------------------------------------------------------------------- %
+% size of the paper: A4
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+% setting for header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% \fancyhead[RO,LE]{\thepage}
+% \fancyhead[RE,LO]{{\textsf \leftmark}}
+% \fancyfoot{}
+% \fancyhead[re,lo]{\sffamily\nouppercase{\leftmark}}
+\fancyhead[re,lo]{}
+\fancyhead[ro,le]{\thepage}
+\fancyfoot{}
+% for the first page
+\fancypagestyle{firstpagestyle}{
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\thepage}
+}
+% for the first page of CV
+\fancypagestyle{CVfirstpagestyle}{
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\thepage}
+}
+% --------------------------------------------------------------------------- %
+% BibLaTeX with jecon bibliography style
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+%\bibliographystyle{unsrt}
+
+% \bibliographystyle{jpe}
+%\bibliographystyle{ecta}
+
+% --------------------------------------------------------------------------- %
+% rename:
+\renewcommand{\refname}{Bibliographies}
+\renewcommand{\abstractname}{Abstract}
+\newcommand{\defeq}{\mathrel{\mathop:}=}
+\newcommand{\eqdef}{\mathrel{\mathop=}:}
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\dbltopfraction}{1.0}
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\floatpagefraction}{1.0}
+\renewcommand{\dblfloatpagefraction}{1.0}
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{10}
+% --------------------------------------------------------------------------- %
+\title{The climate in climate economics: Online appendix}
+\author{Doris Folini\thanks{Institute for Atmospheric and Climate Science, ETHZ; Email:
+    \href{mailto:doris.folini@env.ethz.ch}{doris.folini@env.ethz.ch}.}, \;
+      Aleksandra Friedl\thanks{Department of Economics, University of Lausanne; ifo Institute – Leibniz Institute for Economic Research at the University of Munich; Email: \href{mailto:friedl@ifo.de}{friedl@ifo.de} }, \;
+  Felix K\"ubler\thanks{Department for Banking and Finance, University of Z\"urich; Swiss Finance Institute (SFI); Email: \href{mailto:fkubler@gmail.com}{felix.kuebler@bf.uzh.ch}.}, \;
+  Simon Scheidegger\thanks{Department of Economics, University of Lausanne; Enterprise for Society (E4S); Email: \href{mailto:simon.scheidegger@unil.ch}{simon.scheidegger@unil.ch}.}}
+\date{\today}
+
+\begin{comment}
+%----Helper code for dealing with external references----
+% (by cyberSingularity at http://tex.stackexchange.com/a/69832/226)
+
+\usepackage{xr}
+\makeatletter
+
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+\typeout{(#1)}% latexmk will find this if $recorder=0
+% however, in that case, it will ignore #1 if it is a .aux or 
+% .pdf file etc and it exists! If it doesn't exist, it will appear 
+% in the list of dependents regardless)
+%
+% Write the following if you want it to appear in \listfiles 
+% --- although not really necessary and latexmk doesn't use this
+%
+\@addtofilelist{#1}
+%
+% latexmk will find this message if #1 doesn't exist (yet)
+\IfFileExists{#1}{}{\typeout{No file #1.}}
+}\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+\externaldocument{#1}%
+\addFileDependency{#1.tex}%
+\addFileDependency{#1.aux}%
+}
+%------------End of helper code--------------
+
+% put all the external documents here!
+\myexternaldocument{MS32170manuscript}
+\end{comment}
+
+
+
+
+
+\begin{document}
+\maketitle
+
+
+
+{\small {\bf Keywords:} climate change, social cost of carbon, carbon taxes, environmental policy, deep learning, integrated assessment models, DICE-2016} \\
+
+{\small {\bf JEL classification:} C61, E27, Q5, Q51, Q54, Q58} 
+
+
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{appendices}
+\renewcommand{\appendixname}{Online Appendix}
+\numberwithin{equation}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary table of the models and parameters}
+\label{sec:models_summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}
+{\begin{tabular}{ c c c c c c c c c c c  } 
+ \toprule
+ Name & $b_{12}$  & $b_{23}$ & $M^{EQ}_{AT,UO,LO}$ & $M^{INI}_{AT,UO,LO}$ & $c_1$ & $c_3$ & $c_4$ & $f_{2xco2}$ & $t_{2xco2}$ & $T^{INI}_{AT,OC}$ \\ 
+ \midrule
+ CDICE (MMM-MMM) & 0.054 & 0.0082 & (607, 489, 1281) & (851, 628, 1323) & 0.137 & 0.73 & 0.00689 & 3.45 & 3.25 & (1.1, 0.27)  \\ 
+ CDICE-HadGEM2-ES & 0.054 & 0.0082 & (607, 489, 1281) & (851, 628, 1323) & 0.154 & 0.55 & 0.00671 & 2.95 & 4.55 & (1.1, 0.27) \\ 
+ CDICE-GISS-E2-R & 0.054 & 0.0082 & (607, 489, 1281) & (851, 628, 1323) & 0.213 & 1.16& 0.00921 & 3.65 & 2.15 & (1.1, 0.27) \\ 
+ CDICE-MESMO & 0.059 & 0.008 & (607, 305, 865) & (851, 403, 894) & 0.137 & 0.73 & 0.00689 & 3.45 & 3.25 & (1.1, 0.27) \\
+ CDICE-LOVECLIM & 0.067 & 0.0095 & (607, 600, 1385) & (850, 770, 1444) & 0.137 & 0.73 & 0.00689 & 3.45 & 3.25 & (1.1, 0.27)  \\
+ CDICE-MESMO-HadGEM2-ES & 0.059 & 0.008 & (607, 305, 865) & (851, 403, 894) & 0.154 & 0.55 & 0.00671 & 2.95 & 4.55 & (1.1, 0.27)  \\
+ CDICE-MESMO-GISS-E2-R & 0.059 & 0.008 & (607, 305, 865) & (851, 403, 894) & 0.213 & 1.16& 0.00921 & 3.65 & 2.15 & (1.1, 0.27) \\
+ CDICE-LOVECLIM-HadGEM2-ES & 0.067 & 0.0095 & (607, 600, 1385) & (850, 770, 1444) & 0.154 & 0.55 & 0.00671 & 2.95 & 4.55 & (1.1, 0.27)  \\
+ CDICE-LOVECLIM-GISS-E2-R & 0.067 & 0.0095 & (607, 600, 1385) & (850, 770, 1444) & 0.213 & 1.16& 0.00921 & 3.65 & 2.15 & (1.1, 0.27) \\
+ DICE-2016 & 0.12 & 0.007 & (588, 360, 1720)& (851, 460, 1740) & 0.1005 & 0.088 & 0.025 & 3.6813 & 3.1 & (0.85, 0.0068)\\
+ \bottomrule
+\end{tabular}}
+\caption{Labelling of the models, and their respective parameterization. Note that the coefficients for the DICE-2016 model correspond to a five-year time step, whereas all other models are defined for an annual time step.}
+\label{table:model_calibration}
+\end{table}  
+  
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Generic DICE formulation and calibration}
+\label{sec:generic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In section~\ref{sec:simulation}, we laid out the DICE model as a whole, that is, we specified the dynamic optimization problem that we solve with a calibration of parameters that are either given by DICE-2016 or by variants of our CDICE. We call this dynamic problem, specified  by~\cref{eq:obj_2016,eq:kplus_2016,eq:Kplus_nonnegative,eq:mu_range,eq:emissions}, the generic formulation of the DICE model in terms of its formal structure. The generic formulation allows for an easy switch in parameters between different versions of the DICE model (DICE-2007, DICE-2016) as well as a switch to the CDICE parametrization.\footnote{Note that in the online Appendix \cref{sec:generic}, we also include DICE-2007, for completeness, as there is a vast number of research papers and policy studies that have used this formulation of the DICE model.} The functional forms of DICE-2007 and DICE-2016 are slightly different; however, they do not provide a critical difference in the results. This fact is especially relevant for the laws of motion of exogenous parameters in both models because of the differences in time steps (DICE-2007 operates with a ten-year time step, and DICE-2016 operates with a five-year time step), differences in units of measurement for emissions (GtC in DICE-2007 versus GtCO2 in DICE-2016) and other minor divergences. We believe that it is important to have a unified specification for the DICE model, which in turn allows a broader group of researchers to consider updating their parametrization of the model with respect to our proposed CDICE.
+
+Another feature of the generic specification of the DICE model is that we explicitly allow for the time step. The time step enters all relevant equations as the multiplication factor $\Delta_t$ with respect to the annual baseline calibration for all the parameters. This applies both for the main equations of the model specified in \cref{sec:climate,sec:economy} and for exogenously specified parameters of the model in \cref{sec:generic_exo}.
+
+This online Appendix is organized as follows. We present the generic equations and calibration for all the exogenous parameters of the DICE-2007 (reads Value 2007 in the tables with parameters), DICE-2016 (reads Value 2016), and CDICE first. Then we provide core equations of the model corresponding to the mass of carbon evolution, temperature evolution, and economic growth with calibrations corresponding to DICE-2007, DICE-2016, and CDICE. When necessary, we provide a detailed comment on how the functional forms of certain equations were changed to be the same in the generic formulation and, at the same time, equivalent to the initial formulation of DICE-2007 and DICE-2016 (for example, the law of motion for TFP). 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Exogenous variables}
+\label{sec:generic_exo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We start by introducing the law of motion for exogenous variables that are time dependent. The law of motion for labor is given in~\cref{eq:labor_1y} along with labor growth presented in~\cref{eq:gr_L}: 
+\begin{align}
+\label{eq:labor_1y}
+    & L_{t} = L_{0} + \left(L_{\infty}-L_{0}\right) \left(1-\exp\left(-\Delta_t\delta^{L}t\right)\right), 
+    \\
+    \label{eq:gr_L}
+    & g^{L}_{t}= \frac{\frac{dL_{t}}{dt}}{L_t}=\frac{\Delta_t\delta^{L}}{\frac{L_{\infty}}{L_{\infty}-L_{0}}\exp\left(\Delta_t\delta^{L}t\right)-1}.
+\end{align}
+%
+The numerical values of the parameters for the world population and its growth rate given in~\cref{table:Labor}:
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Annual rate of convergence & $\delta^L$  & 0.035 & 0.0268   \\ 
+ World population at starting year [millions] & $L_0$  & 6514 & 7403 \\ 
+ Asymptotic world population [millions] & $L_{\infty}$  & 8600 & 11500 \\ 
+ Time step of a model & $\Delta_t$  & 10 & 5/1 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parameterization for the evolution of labor.}
+\label{table:Labor}
+\end{table}
+
+% \noindent \textbf{Total factor productivity}
+The total factor productivity evolves according to the equation~\cref{eq:TFP_1y} with its growth rate following~\cref{eq:gr_A}: 
+\begin{align}
+    \label{eq:TFP_1y}
+    A_t &= A_0 \text{exp} \left( \frac{\Delta_t g^A_0 (1 - \text{exp}(-\Delta_t\delta^A t) )}{\Delta_t\delta^A}   \right) .\\
+    \label{eq:gr_A}
+    g^{A}_{t} & = \frac{\frac{dA_{t}}{dt}}{A_t} =
+    \Delta_tg^A_0\exp\left(-\Delta_t\delta^A t\right).
+\end{align}
+ The respective parameters of the total factor productivity evolution and TFP growth rate are given in~\cref{table:TFP}:
+%
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Initial growth rate for TFP per year & $g^A_0$  & 0.01314 & 0.0217  \\ 
+ Decline rate of TFP growth per year & $\delta^A$  & 0.001 & 0.005 \\ 
+ Initial level of TFP & $A_0$  & 0.0058 & 0.010295 \\ 
+ Time step of a model & $\Delta_t$  & 10 & 5/1 \\ 
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the evolution of TFP.}
+\label{table:TFP}
+\end{table}
+
+
+
+The carbon intensity, defined in~\cref{eq:carbon_1y_2007} for DICE-2007 and in \cref{eq:carbon_1y_2016}, characterizes how much anthropogenic carbon inflows the climate system due to production activity:
+% \noindent The carbon intensity in DICE-2007 is given by:\\
+\begin{align}
+      \label{eq:carbon_1y_2007}
+      \sigma_{t} =
+      \sigma_{0}\exp \left( \frac{\Delta_tg^\sigma_0 (1- \text{exp}(-\Delta_t\delta^\sigma t) )}{\Delta_t\delta^\sigma}   \right). 
+\end{align}
+\noindent The carbon intensity in DICE-2016 is given by:\\
+\begin{align}
+\label{eq:carbon_1y_2016}
+        \sigma_{t} =
+      \sigma_{0}\exp \left( \frac{\Delta_tg^\sigma_0 }{\text{log}(1+ \Delta_t\delta^\sigma) } \left( (1 + \Delta_t\delta^\sigma)^t -1 \right) \right).
+\end{align}
+The parametrization for carbon intensity processes is given by~\cref{table:sigma}:
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Initial growth of carbon intensity per year & $g^\sigma_0$  & -0.0073 & -0.0152  \\ 
+ Decline rate of decarbonization per year & $\delta^{\sigma}$  & 0.003 & 0.001 \\ 
+ Initial carbon intensity (1000GtC) & $\sigma_0$  & 0.00013418 & 0.00009556 \\ 
+ Time step & $\Delta_t$  & 10 & 5/1 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parameterization for the carbon intensity evolution.}
+\label{table:sigma}
+\end{table}
+
+DICE-2016 uses a backstop technology capable of mitigating the full amount of industrial emissions that enter the atmosphere. The cost of backstop technology is assumed to be initially high but could be reduced over time, which is reflected in the definition of the coefficient of the abatement cost function $\theta_{1,t}$ as defined in \cref{eq:abat_1y_2007} for DICE-2007 and  \cref{eq:abat_1y_2016} for DICE-2016.\footnote{The scale parameter 1000 in the equations~\eqref{eq:abat_1y_2007} and~\eqref{eq:abat_1y_2016} reflects the fact that we use a 1000 GtC unit of measurement; the parameter $\text{c2co2}$ transforms carbon intensity measured in GtC into GtCO2, as the backstop price in DICE-2016 is given for GtCO2 instead of GtC.}\\
+The abatement cost in DICE-2007 is given by:\\
+\begin{align}
+        \label{eq:abat_1y_2007}
+        &\theta_{1,t} =
+        \frac{p^{\text{back}}_{0}(1+\exp\left(-g^{\text{back}}t \right))1000  \sigma_{t}}{\theta_{2}}.
+\end{align}
+
+\noindent The abatement cost in DICE-2016 is given by:\\
+\begin{align}
+        \label{eq:abat_1y_2016}
+        &\theta_{1,t} =
+        \frac{p^{\text{back}}_{0}\exp\left(-g^{\text{back}}t \right)1000 \cdot \text{c2co2} \cdot \sigma_{t}}{\theta_{2}}.
+\end{align}
+The parameters for the abatement cost are presented in~\cref{table:theta}:
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Cost of backstop  2005 thUSD per tC 2005 & $p^{\text{back}}_{0}$  & 0.585 & -  \\ 
+  Cost of backstop  2010 thUSD per tCO2 2015 & $p^{\text{back}}_{0}$  & - & 0.55  \\ 
+ Initial cost decline backstop cost per year & $g^{\text{back}}$  & 0.005 & 0.005 \\ 
+ Exponent of control cost function & $\theta_{2}$  & 2.8 & 2.6 \\
+ Transformation coefficient from C to CO2 & $\text{c2co2}$  & - & 3.666 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the abatement cost.}
+\label{table:theta}
+\end{table}
+
+The non-industrial emissions from land use and deforestation decline over time according to~\cref{eq:land_1y}, with parameters are presented in~\cref{table:eland}:
+\begin{align}
+        \label{eq:land_1y}
+      E_{\text{Land},t} =
+      E_{\text{Land},0}\exp\left(-\Delta_t\delta^{\text{Land}}t\right).
+\end{align}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Emissions from land 2005 (1000GtC per year) & $E_{\text{Land},0}$  & 0.0011 & -  \\ 
+  Emissions from land 2015 (1000GtC per year) & $E_{\text{Land},0}$  & - & 0.000709 \\ 
+ Decline rate of land emissions (per year) & $\delta^{\text{Land}}$  & 0.01 & 0.023 \\ 
+ Time step & $\Delta_t$  & 10 & 5/1 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the emissions from land.}
+\label{table:eland}
+\end{table}
+
+The exogenous radiative forcings that result from non-CO2 GHG are described in~\cref{eq:forc_1y}:
+\begin{align}
+    \label{eq:forc_1y}
+        F^{EX}_{t} = F^{EX}_{0} + \frac{1}{\text{T}/\Delta_t}(F^{EX}_{1} -F^{EX}_{0}) \min(t, \text{T}/\Delta_t).
+  \end{align}
+The parameters of the exogenous radiative forcings are given in~\cref{table:FEX}:
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ 2000 forcings of non-CO2 GHG (Wm-2) & $F^{EX}_{0}$  & -0.06 & -  \\
+ 2015 forcings of non-CO2 GHG (Wm-2) & $F^{EX}_{0}$  & - & 0.5  \\ 
+ 2100 forcings of non-CO2 GHG (Wm-2) & $F^{EX}_{1}$  & 0.3 & 1.0  \\  
+ Number of years before 2100 & $\text{T}$  & 100 & 85 \\ 
+ Time step & $\Delta_t$ & 10 & 5/1 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the exogenous forcing.}
+\label{table:FEX}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The equations of the climate system}
+\label{sec:climate2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The laws of motion for the mass of carbon in the atmosphere are presented in the main body of the text with~\cref{eq:cc_mass}. The temperature equations are given in \cref{eq:temp1,eq:temp2}.  However, we believe it can be helpful to provide the full description of the equations above together with their parametrization that can be used to relate DICE-2007 to DICE-2016 and CDICE.
+
+
+The evolution for the mass of carbon in all three reservoirs is given by the \cref{eq:MAT_appendix,eq:MUO_appendix,eq:MLO_appendix}, carbon emissions are determined with the \cref{eq:Emit_appendix}:
+
+
+\begin{align}
+& \label{eq:MAT_appendix}  M^{\text{AT}}_{t+1} = (1- \Delta_tb_{12}) M^{\text{AT}}_{t} + \Delta_tb_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}}M^{\text{UO}}_{t} +  \Delta_t E_t ,\\
+  %
+  & \label{eq:MUO_appendix}  M^{\text{UO}}_{t+1} = \Delta_tb_{12}M^{\text{AT}}_{t} + (1- \Delta_tb_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - \Delta_tb_{23})M^{\text{UO}}_{t} + \Delta_tb_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}}M^{\text{LO}}_{t} ,\\
+  %
+  & \label{eq:MLO_appendix}  M^{\text{LO}}_{t+1} = \Delta_tb_{23}M^{\text{UO}}_{t} + (1-\Delta_tb_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}})M^{\text{LO}}_{t},\\
+  & \label{eq:Emit_appendix} E_t = \sigma_t Y^{\text{Gross}}_{t} (1-\mu_t) + E^{\text{Land}}_t .\\
+\end{align}
+%
+The parameters for the laws of motion for the masses of carbon, as well as the starting values and equilibrium values, are given in~\cref{table:masses}.
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c c } 
+ \toprule
+ Calibrated parameter & Symbol  & 2007 & 2016 & CDICE \\ 
+ \midrule
+ Carbon cycle, annual value & $b_{12}$  & 0.0189288 & 0.024 & 0.054 \\ 
+ Carbon cycle, annual value & $b_{23}$  & 0.005 & 0.0014 & 0.0082\\ 
+ Time step & $\Delta_t$  & 10 & 5 & 1 \\
+ Equilibrium concentration in atmosphere (1000GtC) & $M^{\text{AT}}_{\text{EQ}}$  & 0.587473 & 0.588 &  0.607 \\
+ Equilibrium concentration in upper strata (1000GtC) & $M^{\text{UO}}_{\text{EQ}}$  & 1.143894 & 0.360 & 0.489 \\
+ Equilibrium concentration in lower strata (1000GtC) & $M^{\text{LO}}_{\text{EQ}}$  & 18.340 & 1.720 & 1.281 \\
+ Concentration in atmosphere 2015 (1000GtC) & $M^\text{AT}_\text{INI}$  & 0.8089 & 0.851 & 0.851\\
+ Concentration in upper strata 2015 (1000GtC) & $M^\text{UO}_\text{INI}$  & 1.255& 0.460 & 0.628\\
+ Concentration in lower strata 2015 (1000GtC) & $M^\text{LO}_\text{INI}$  & 18.365 & 1.740 & 1.323\\
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the mass of carbon.}
+\label{table:masses}
+\end{table}
+
+The temperature evolution is determined by \cref{eq:temp1_appendix,eq:temp2_appendix,eq:forcing_appendix} with parameters and starting values given in~\cref{table:temps}:
+\begin{align}
+& \label{eq:temp1_appendix} T^{\text{AT}}_{t+1} = T^{\text{AT}}_{t} + \Delta_tc_1 F_t  - \Delta_tc_1 \frac{F_{\text{2XCO2}}}{T_{\text{2XCO2}}}T^{\text{AT}}_{t}- \Delta_tc_1c_3 \left(T^{\text{AT}}_{t}-T^{\text{OC}}_{t}\right),    \\
+    %
+   & \label{eq:temp2_appendix}  T^{\text{OC}}_{t+1} = T^{\text{OC}}_{t} + \Delta_tc_4 \left(T^{\text{AT}}_{t}  - T^{\text{OC}}_{t}\right),\\
+   & \label{eq:forcing_appendix} F_{t} = F_{\text{2XCO2}} \frac{\log(M^{\text{AT}}_{t}/M^{\text{AT}}_{\text{base}})}{\log(2)} + F^{EX}_{t}.
+\end{align}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c c } 
+ \toprule
+ Calibrated parameter & Symbol  & 2007 & 2016 & CDICE \\ 
+ \midrule
+ Temperature coefficient, annual value & $c_{1}$  & 0.022 & 0.0201 & 0.137\\
+ Temperature coefficient, annual value & $c_{3}$  & 0.3 & 0.088 & 0.73\\
+ Temperature coefficient, annual value & $c_{4}$  & 0.01 & 0.005 & 0.00689\\ 
+ Forcings of equilibrium CO2 doubling (Wm-2) & $F_{\text{2XCO2}}$  & 3.8 & 3.6813 & 3.45\\
+ Eq temperature impact (\textdegree{}C per doubling CO2) & $T_\text{2XCO2}$  & 3.0 & 3.1 & 3.25\\
+ Eq concentration in atmosphere (1000GtC) & $M^{\text{AT}}_{\text{base}}$  & 0.5964 & 0.588 & 0.607\\
+ Atmospheric temp change (\textdegree{}C) from 1850  & $T^{\text{AT}}_0$  & 0.7307 & 0.85 & 1.1\\
+ Lower stratum temp change (\textdegree{}C) from 1850  & $T^{\text{OC}}_0$  & 0.0068 & 0.0068 & 0.27\\
+ Time step & $\Delta_t$  & 10 & 5 & 1\\
+ \bottomrule
+\end{tabular}
+\caption{Generic parametrization for the temperature.}
+\label{table:temps}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Economy equations}
+\label{sec:economy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The capital evolution and gross output in both models, DICE-2007 and DICE-2016, are given by:
+\begin{align}
+\label{eq:capital_appendix}
+    K_{t+1} &= (1-\delta^K)^{\Delta_t} K_t + \Delta_t I_t,\\
+    \label{eq:grossoutput_appendix}
+    Y^{\text{Gross}}_t &= (A_t L_t)^{1-\alpha} K_t^{\alpha}.
+\end{align}
+The functional forms of damages differ in DICE-2007 and DICE-2016. In DICE-2007, damages, abatement costs, output net of damages, and output net of damages and abatement costs  are given by:
+\begin{align}
+ \label{eq:damages2007_appendix}   \Omega_t &= \frac{1}{1 + \psi_1 T^{\text{AT}}_{t} + \psi_2 (T^{\text{AT}}_{t})^2}, \\
+  \label{eq:abatcost2007_appendix}  \Theta_{t} &= \theta_{1,t} \mu_t ^ {\theta_2},\\
+   \label{eq:netout2007_appendix} Y^{\text{Net}}_t &= Y^{\text{Gross}}_t \cdot \Omega_t =  \frac{Y^{\text{Gross}}_t}{1 + \psi_1 T^{\text{AT}}_{t} + \psi_2 (T^{\text{AT}}_{t})^2} ,\\
+   \label{eq:output2007_appendix} Y_t &= Y^{\text{Gross}}_t \cdot \Omega_t \cdot (1-\Lambda_t) = \frac{Y^{\text{Gross}}_t (1-  \theta_{1,t} \mu_t ^ {\theta_2})}{1 + \psi_1 T^{\text{AT}}_{t} + \psi_2 (T^{\text{AT}}_{t})^2}.\\
+\end{align}
+The same variables for DICE-2016 are given by the following equations:
+\begin{align}
+    \label{eq:damages2016_appendix} \Omega_t &=  \psi_1 T^{\text{AT}}_{t} + \psi_2 (T^{\text{AT}}_{t})^2 ,\\
+    \label{eq:abatcost2016_appendix} \Theta_{t} &= \theta_{1,t} \mu_t ^ {\theta_2},\\
+    \label{eq:netout2016_appendix} Y^{\text{Net}}_t &= Y^{\text{Gross}}_t \cdot (1- \Omega_t )=  Y^{\text{Gross}}_t (1 - \psi_1 T^{\text{AT}}_{t} - \psi_2 (T^{\text{AT}}_{t})^2),  \\
+    \label{eq:output2016_appendix} Y_t &= Y^{\text{Gross}}_t  \cdot (1-\Lambda_t - \Omega_t) = Y^{\text{Gross}}_t (1-  \theta_{1,t} \mu_t ^ {\theta_2} - \psi_1 T^{\text{AT}}_{t} - \psi_2 (T^{\text{AT}}_{t})^2).\\
+\end{align}
+Consumption in both DICE-2007 and DICE-2016 models is given by:
+\begin{align}
+    C_t &= Y_t - I_t.
+\end{align}
+%
+However, the utility function in DICE-2007 differs slightly from the utility used in DICE-2016. Utility in DICE-2007 is the following:
+\begin{align}
+    U_t &= \sum_{t=0}^{T}{\beta^{t} \cdot \Delta_t \cdot \frac{\left(\frac{C_t}{L_t} \right)^{1-1/\psi} - 1 }{1-1/\psi} L_t }.
+\end{align}
+And utility in DICE-2016 is given by:
+\begin{align}
+    U_t &= \sum_{t=0}^{T}{\beta^{t} \cdot \Delta_t \cdot \frac{\left(\frac{C_t}{L_t} \right)^{1-1/\psi} - 1 }{1-1/\psi} L_t }.
+\end{align}
+The discount rate in both DICE-2007 and DICE-2016 models is the same and determined as:
+\begin{align}
+    \beta &= \frac{1}{(1+\rho)^{\Delta_t}}.
+\end{align}
+The parameters for the economic part of DICE-2007 and DICE-2016 are given in~\cref{table:econ}.
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c  } 
+ \toprule
+ Calibrated parameter & Symbol  & Value 2007 & Value 2016/CDICE \\ 
+ \midrule
+ Capital annual depreciation rate & $\delta^K$  & 0.1 & 0.1  \\ 
+ Elasticity of capital  & $\alpha$  & 0.3 & 0.3  \\
+ Damage parameter  & $\psi_1$  & 0.0 & 0.0  \\
+ Damage quadratic parameter  & $\psi_2$  & 0.0028388 & 0.00236  \\
+ Exponent of control cost function  & $\theta_2$  & 2.8 & 2.6  \\
+ Risk aversion  & $\psi$  & 0.5 & 0.69  \\
+ Time preferences   & $\rho$  & 0.015 & 0.015  \\
+ Initial capital (trillions USD 2015)  & $K_0$ & - & 223. \\
+ Initial capital (trillions USD 2005)  & $K_0$ & 137. & - \\
+ Time step & $\Delta_t$  & 10 & 5/1 \\
+ \bottomrule
+\end{tabular}
+\caption{Generic parameterization for the parameters of economy.}
+\label{table:econ}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sensitivity exercise: change in the exogenous forcing}
+\label{sec:fex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In section~\ref{sec:test_cmip5_rcp} we used an alternative evolution equation for exogenous forcings, namely 
+\begin{equation}
+    F^{\text{EX}} = 0.3 \cdot F^{\text{CO2}}_t.
+\end{equation}
+This specification was adopted instead of \cref{eq:forc_1y} that was used in DICE-2016. As was shown in Figure~\ref{fig:CMIPBM}, this switch from the original DICE-2016 exogenous forcings can make quite a difference in the temperature evolution. However, when computing the simulation results in section~\ref{sec:simulation}, we used the original exogenous forcings equation \cref{eq:forc_1y} to remain consistent with the DICE-2016 model and to focus on analyzing the influence of the re-calibrated climate part on policies, which was the goal of the section. Therefore, in this section of the online Appendix, we want to investigate the consequences of implementing time-dependent exogenous forcings that  differ for the DICE-2016 and CDICE models. 
+
+
+Below we present some solution results for the optimization problem \cref{eq:obj_2016} when the agent chooses optimal investment and mitigation paths. Furthermore, we compare DICE-2016 and CDICE with original and alternative exogenous forcings. Overall changing exogenous forcings does not make much of a difference for the modeling results. However, there are a couple of interesting observations that are worth mentioning.
+
+\begin{figure}[!htb]
+\centering
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    % \includegraphics[width=1.0\linewidth]{figs/Optimal_FEX/Masses300_1y_optimal_FEXMATx.pdf}
+    \includegraphics[width=1.0\linewidth]{figures_restud/fig20a.pdf}
+    \caption{Mass of carbon in the atmosphere} 
+    \label{fig:fex_mass_temp:a} 
+        % \vspace{4ex}
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    % \includegraphics[width=1.0\linewidth]{figs/Optimal_FEX/Temp300_1y_optimal_FEXTATx.pdf}
+    \includegraphics[width=1.0\linewidth]{figures_restud/fig20b.pdf}
+    \caption{Temperature of the atmosphere} 
+    \label{fig:fex_mass_temp:b} 
+    % \vspace{4ex}
+  \end{subfigure} 
+  \caption{Mass of carbon in the atmosphere (left) and temperature of the atmosphere (right) for DICE-2016, and CDICE models with different exogenous forcing evolution (DICE-2016-FEX, CDICE-FEX show the model variables under the assumption of time dependent exogenous forcings) for an optimal abatement case. Year zero on the graphs corresponds to a starting year 2015.}
+  \label{fig:fex_mass_temp}
+\end{figure}
+
+From Figure~\ref{fig:fex_mass_temp} we see that change in the exogenous forcings does not affect the CDICE model much but has some effect on DICE-2016. In DICE-2016 exogenous forcings being time-dependent results in a lower mass of carbon in the atmosphere than in DICE-2016 with the original forcings. However, it leads to an even higher temperature increase. The reason for this increased sensitivity of DICE-2016 is the same as for its excessive sensitivity to the discount rate. The carbon cycle and temperature equations are not in balance. Thus they overreact in transmitting changes in the inputs of the model towards outputs. 
+
+\begin{figure}[!htb] 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    % \includegraphics[width=1.0\linewidth]{figs/Optimal_FEX/Econ300_1y_optimal_FEXOmega.pdf} 
+    \includegraphics[width=1.0\linewidth]{figures_restud/fig21a.pdf} 
+    \caption{Damages} 
+    \label{fig:fex_dam_SCC:a} 
+        % \vspace{4ex}
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    % \includegraphics[width=1.0\linewidth]{figs/Optimal_FEX/SCC300_1y_optimal_FEXscc.pdf}
+    \includegraphics[width=1.0\linewidth]{figures_restud/fig21b.pdf}
+    \caption{SCC} 
+    \label{fig:fex_dam_SCC:b} 
+    % \vspace{4ex}
+  \end{subfigure} 
+  \caption{Damages (left) and the social cost of carbon (right) for DICE-2016, and CDICE models with different exogenous forcings evolution (DICE-2016-FEX, CDICE-FEX show the model variables under the assumption of time dependent exogenous forcings) for an optimal abatement case. Year zero on the graphs corresponds to a starting year 2015.}
+  \label{fig:fex_dam_SCC}
+\end{figure}
+
+Figure~\ref{fig:fex_dam_SCC} reports damages and the social cost of carbon for models under consideration. Both variables are coherently in line with the expectations that one might get analyzing temperature equations. DICE-2016 with time-dependent forcings predicts more damages and thus a higher social cost of carbon. For CDICE, both damages and the social cost of carbon remain roughly the same, with CDICE variables being slightly lower for alternative exogenous forcing formulation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Computational details}
+\label{sec:computation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this online Appendix, we briefly outline how we numerically solve the re-calibrated DICE-2016 model (cf. Section~\ref{sec:simulation}) by applying \lq\lq Deep Equilibrium Nets\rq\rq (DEQNs)~\citep{azinovic2019Deep}. 
+To do so, we proceed in two steps. First, we summarize in Section~\ref{sec:DEQNs} the DEQN solution technique in the most general form. Second, we detail in Section~\ref{sec:CDICE_DEQN} how the CDICE model can be cast in a form amenable to DEQNs. Section~\ref{sec:error_stats} finally reports detailed error statistics for our benchmark CDICE model. For further implementation details, we refer the reader to the repository hosted under the following URL:~\url{https://github.com/ClimateChangeEcon/Climate_in_Climate_Economics} and which contains all replication codes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Deep Equilibrium Nets in a Nutshell}
+\label{sec:DEQNs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+From an abstract perspective, the DEQN algorithm 
+is a simulation-based solution method using deep neural networks\footnote{See, e.g.,~\cite{Goodfellow-et-al-2016} for a textbook treatment of neural networks.} to compute an approximation of the \textit{optimal policy function} $\p : X \rightarrow Y \subset \mathbb{R}^K$ to a dynamic model under the assumption that the underlying economy can be characterized via discrete-time first-order equilibrium conditions, that is, 
+%
+\begin{equation}
+  \textbf{G}(\x, {\bf{p}})=\bf{0} \ \forall \x \in {\textit{X}},  
+  \label{eq:FOC_example}
+\end{equation}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Intuitively, DEQNs work as follows: An unknown policy function is approximated with a neural network, that is, $\p(\bf{x})\approx\nn(\bf{x})$, and where the $\bf{\nu}$'s are ex-ante unknown coefficients of the neural network that have to be determined based on some suitable loss function measuring the quality of a given approximation at a given state of the economy. 
+
+The DEQN algorithm is started by randomly initializing the $\nu$'s~\citep{pmlr-v9-glorot10a}, that is, an arbitrary guess for the ex-ante unknown approximate policy function. 
+Next, we simulate a sequence of $N_{\text{path length}}$ states.
+Starting from some given state $\x_t$, the next state $\x_{t+1}$ is a result of the policies encoded by the neural network, $\nn(\bf{x})$, and remaining model-implied dynamics.
+
+If we knew the (approximate) policy function satisfying the equilibrium conditions, expression~\eqref{eq:FOC_example} would hold along a simulated path. However, since the neural network is initialized with random coefficients, $\textbf{G}(\x_t, \nn(\bf{\x_t}))\neq 0$ along the simulated path of length $N_{\text{path length}}$. 
+This fact is now leveraged to improve the quality of the guessed policy function. Specifically, DEQNs use the error in the equilibrium conditions as a loss function, that is,
+%
+\begin{equation}
+\ell_{\bm{\nu}}:= \frac{1}{N_{\text{path length}}}\sum_{\x_t \text{on sim. path}}\sum_{m=1}^{N_{eq}}\left(G_{m}(\x_t, \nn(\x_t))\right)^2 ,
+\label{eq:loss_function_DEQN}
+\end{equation}
+%
+where $G_{m}(\x_t, \nn(\x_t)))$ represent all the $N_{eq}$ first-order equilibrium conditions of a given model.
+Expression~\eqref{eq:loss_function_DEQN} can now be used to update the parameters of the network with any variant of gradient descent,\footnote{In our practical applications, we use \lq\lq Adam\rq\rq~\citep{kingma2014adam}.} namely,
+%
+\begin{equation}
+  \nu^{'}_{k}=\nu_{k} - \lr \frac{\partial \ell(\bm{\nu})}{\partial \nu_{k}},
+  \end{equation}
+%
+where $\nu^{'}_{k}$ represents the updated $k-$th parameter of the neural network, that is, $\nn = \mathcal{N}_{\nu}^{'}$, and where $\lr\in \mathbb{R}$ denotes the so-called learning rate. 
+The updated neural network-based representation of the policy is subsequently used to simulate a sequence of length $N_{\text{path length}}$ steps, along which the loss function is recorded, and 
+the latter is again used to update the network parameters. This iterative procedure is pursued until $\ell_{\bm{\nu}}< \epsilon\in \mathbb{R}$, that is, until an approximate equilibrium policy, has been found.
+
+In summary, the DEQN algorithm consists of four building blocks: i) deep neural networks for approximating the equilibrium policies; ii) a suitable loss function measuring the quality of a given approximation at a given state of the economy; iii) an updating mechanism to improve the quality of the approximation; and iv) a sampling method for choosing states for updating and evaluating of the approximation quality. We next outline each of these components for clarity in the context of CDICE.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mapping CDICE onto Deep Equilibrium Nets}
+\label{sec:CDICE_DEQN}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this online Appendix, we introduce a formal way of mapping CDICE, but more broadly speaking, non-stationary models, onto the neural network-based DEQN solution framework. To ensure the replicability of our procedure, we next thoroughly list every mathematical manipulation that is required. 
+
+We begin by stating the CDICE model (cf. the online Appendix~\ref{sec:generic} for the detailed calibration), that is, 
+%
+\begin{align}
+\label{eq:CDICE_obj}
+  & \max_{\left\{C_{t}, \mu_t\right\}_{t=0}^{\infty}} \sum_{t=0}^{\infty} \beta^t
+  \frac{\left(\frac{C_t}{L_t}\right)^{1-1/\psi} -1}{1-1/\psi} L_t\\
+  %
+  \text{s.t.} \quad \label{eq:CDICE_kplus}
+  & K_{t+1} = \left(1 - \Omega\left(T_{\text{AT},t}\right) -\Theta\left(\mu_{t}\right)\right)
+    K_t^{\alpha} \left(A_{t}L_t\right)^{1-\alpha} + (1-\delta) K_t - C_{t} \quad \left(\lambda_{t}\right)  \\
+    %
+  & \label{eq:CDICE_MATplus} M^{\text{AT}}_{t+1} = \left(1 - b_{12}\right) M^{\text{AT}}_{t} + b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} M^{\text{UO}}_{t} +   \sigma_t (1-\mu_t) K_t^{\alpha} \left(A_{t}L_t\right)^{1-\alpha}  + E^{\text{Land}}_t \quad \left(\nu^{\text{AT}}_{t}\right)\\
+  %
+  & \label{eq:CDICE_MUOplus} M^{\text{UO}}_{t+1} = b_{12}M^{\text{AT}}_{t} + \left(1 - b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right)M^{\text{UO}}_{t} + b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}}  M^{\text{LO}}_{t} \quad \left(\nu^{\text{UO}}_{t}\right)  \\
+  %
+  & \label{eq:CDICE_MLOplus} M^{\text{LO}}_{t+1} = b_{23}M^{\text{UO}}_{t} + \left(1 - b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right)M^{\text{LO}}_{t} \quad \left(\nu^{\text{LO}}_{t}\right)\\
+  %
+  & \label{eq:CDICE_TATplus} T^{\text{AT}}_{t+1} = T^{\text{AT}}_{t} + c_1 \left(F_{\text{2XCO2}} \frac{\log(M^{\text{AT}}_{t}/M^{\text{AT}}_{\text{base}})}{\log(2)} + F^{EX}_{t} \right)  - c_1 \frac{F_{\text{2XCO2}}}{T_{\text{2XCO2}}}T^{\text{AT}}_{t}- c_1c_3 \left(T^{\text{AT}}_{t}-T^{\text{OC}}_{t}\right) \quad \left(\eta^{\text{AT}}_{t}\right)\\
+    %
+&    \label{eq:CDICE_TOCplus} T^{\text{OC}}_{t+1} = T^{\text{OC}}_{t} + c_4 \left(T^{\text{AT}}_{t}  - T^{\text{OC}}_{t}\right) \quad \left(\eta^{\text{OC}}_{t}\right)\\
+  & \label{eq:CDICE_mu_range} 0 \leq \mu_t \leq 1 \quad \left( \lambda^{\mu}_{t} \right),
+\end{align}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+where the Lagrange and KKT multipliers we will employ below have been added in parentheses for completeness. 
+
+
+The state of the economy at time $t$ is given by 
+%
+\begin{equation}
+    {\bf{x}}_t \in \mathbb{R}^6 := \left(k_t, M^{\text{AT}}_{t}, M^{\text{UO}}_{t}, M^{\text{LO}}_{t}, T^{\text{AT}}_{t}, T^{\text{OC}}_{t}, t \right)^T.
+\end{equation}
+%
+Note that we take time $t$ as an exogenous state to account for the non-stationary nature of the IAM, whereas all other states are endogenously determined. Furthermore, to ensure computational tractability, we follow~\citet{Traeger2014} and map the unbounded physical time $t \in \left[0,\infty\right)$ via the strictly monotonic transformation
+%
+\begin{align}
+  \label{eq:def_tau}
+  \tau = 1 - \exp\left(-\vartheta t\right).
+\end{align}
+%
+into the unit interval, $\tau \in \left(0, 1\right]$.\footnote{An alternative way to deal with transitory dynamics is to use so-called ``shooting methods'' (see, e.g.,~\cite{arellano_2023}, and references therein).} To scale back from the auxiliary time $\tau$ to the physical time, the inverse transformation of equation~\eqref{eq:def_tau} can be applied, that is, 
+%
+\begin{align}
+  \label{eq:inverse_tau}
+  t = -\frac{\ln\left(1-\tau\right)}{\vartheta}.
+\end{align}
+%%%%%%%%%%%%%
+%
+Next, we re-scale consumption and capital as
+%
+\begin{align}
+  \label{eq:labor_argument}
+  c_{t} \defeq \frac{C_{t}}{A_{t}L_{t}}, k_{t} \defeq \frac{K_{t}}{A_{t}L_{t}}.
+\end{align}
+The following normalization of 
+the Lagrangian and the KKT multipliers helps to stabilize the solution process, that is:
+%
+\begin{align}
+ \nonumber
+  \hat{\lambda}_{t} &\defeq
+  \frac{\lambda_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},
+  \hat{\lambda}^{\mu}_{t} \defeq
+  \frac{\lambda^{\mu}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},
+  \hat{\nu}^{\text{AT}}_{t} \defeq
+  \frac{\nu^{\text{AT}}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},
+  \hat{\nu}^{\text{UO}}_{t} \defeq
+  \frac{\nu^{\text{UO}}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},
+  \hat{\nu}^{\text{LO}}_{t} \defeq
+  \frac{\nu^{\text{LO}}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},\\ \label{eq:multiplier_ALunit}
+  \hat{\eta}^{\text{AT}}_{t} &\defeq
+  \frac{\eta^{\text{AT}}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}},
+  \hat{\eta}^{\text{OC}}_{t} \defeq
+  \frac{\eta^{\text{OC}}_{t}}{A_{t}^{1-\frac{1}{\psi}}L_{t}}.
+\end{align}
+%
+Furthermore, we introduce a quantity called the \lq\lq effective discount factor\rq\rq, 
+  %
+\begin{align}
+  \label{eq:effective_beta}
+  \hat{\beta}_t \defeq
+  \exp\left(-\rho + \left(1-\frac{1}{\psi}\right)g^{A}_{t} + g^{L}_{t}\right).
+\end{align}
+%
+
+
+The policy function $\p$ we intend to approximate with the aid of deep neural networks is given by 
+%
+\begin{equation}
+\label{eq:policy}
+  \nn(\x_t)\in\mathbb{R}^{9} := \left(k_{t+1}, \mu_t, \hat{\lambda}_{t}, \hat{\lambda}^{\mu}_{t}, \hat{\nu}^{\text{AT}}_{t}, \hat{\nu}^{\text{UO}}_{t}, \hat{\nu}^{\text{LO}}_{t}, \hat{\eta}^{\text{AT}}_{t}, \hat{\eta}^{\text{OC}}_{t}     \right).
+\end{equation}
+%
+and consists of the choice variables ($k_{t+1}, \mu_t$)\footnote{In our computations, we follow the literature and employ $k_{t+1}$ instead of $c_t$ as a choice variable, as it allows for a simpler update of the state variable $k_t$. Nevertheless, we still keep the first-order conditions with respect to $k_{t+1}$ and $c_t$. 
+In practical applications, the performance of neural networks can, as in our case, often benefit from redundant information (see, e.g.,~\cite{azinovic2019Deep} for more details).} as well as the Lagrange and KKT multipliers.
+
+Next, we derive the first-order conditions in order to form a loss function for the CDICE model that is suitable for DEQNs (cf. equation~\eqref{eq:loss_function_DEQN}).
+To do so, we start by formulating the Lagrangian of the model, which reads,
+%
+\begin{align}
+ \label{eq:CDICE_lagrangian}
+  \nonumber \mathcal{L} =
+  \sum_{t=0}^{\infty}\hat{\beta}_t \Bigl[
+  &\frac{c_{t}^{1-1/\psi}  -A_t^{1/\psi-1}}{1-1/\psi}
+  \\
+  %
+  \nonumber
+  & + \hat{\lambda}_{t}\left\{\left(1 - \Omega\left(T_{\text{AT},t}\right) - \Theta\left(\mu_{t}\right)\right)k_{t}^{\alpha}
+    + \left(1-\delta\right)k_{t}
+    - c_{t} - \exp\left(g^{A}_{t}+g^{L}_{t}\right)k_{t+1}\right\}\\
+%
+  \nonumber
+  & + \hat{\lambda}^{\mu}_{t}\left\{1-\mu_{t}\right\}\\
+%
+  \nonumber
+    &+\hat{\nu}_t^{\text{AT}} \left\{\left(1 - b_{12} \right) M^{\text{AT}}_{t} + b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} M^{\text{UO}}_{t} +   \sigma_t (1-\mu_t) A_{t}L_{t}k_{t}^{\alpha}  + E^{\text{Land}}_t - M^{\text{AT}}_{t+1}\right\} \\
+    %
+  \nonumber
+    &+\hat{\nu}_t^{\text{UO}} \left\{b_{12}M^{\text{AT}}_{t} + \left(1 - b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right)M^{\text{UO}}_{t} + b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} M^{\text{LO}}_{t} - M^{\text{UO}}_{t+1} \right\} \\
+    %
+  \nonumber
+    &+\hat{\nu}_t^{\text{LO}} \left\{b_{23}M^{\text{UO}}_{t} + \left(1 - b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right)M^{\text{LO}}_{t} - M^{\text{LO}}_{t+1} \right\} \\
+    %
+  \nonumber
+    & + \hat{\eta}_t^{\text{AT}} \left\{ T^{\text{AT}}_{t} + c_1 \left(F_{\text{2XCO2}} \frac{\log(M^{\text{AT}}_{t}/M^{\text{AT}}_{\text{base}})}{\log(2)} + F^{EX}_{t} \right)  - c_1 \frac{F_{\text{2XCO2}}}{T_{\text{2XCO2}}}T^{\text{AT}}_{t}- c_1c_3 \left(T^{\text{AT}}_{t}-T^{\text{OC}}_{t}\right) - T^{\text{AT}}_{t+1} \right\} \\
+    %
+    & + \hat{\eta}_t^{\text{OC}} \left\{ T^{\text{OC}}_{t} + c_4 \left(T^{\text{AT}}_{t}  - T^{\text{OC}}_{t}\right) - T^{\text{OC}}_{t+1} \right\} 
+    \Bigr]
+    %
+\end{align}
+%
+
+The Lagrangian is now used to compute the first-order conditions, that is,
+%
+\begin{align}
+  %
+  \label{eq:CDICE_foc_kplus}
+\nonumber \frac{\partial \mathcal{L}}{\partial k_{t+1}}=0
+      \Leftrightarrow & \;
+    \exp\left(g^{A}_{t}+g^{L}_{t}\right)\hat{\lambda}_t
+    - \hat{\beta}_t \Bigl[\hat{\lambda}_{t+1} \left(\left(1 - \Omega\left(T_{\text{AT},t+1}\right)- \Theta\left(\mu_{t}\right)\right)
+    \alpha k^{\alpha-1}_{t+1} + \left(1-\delta\right) \right) \\
+& \quad + \hat{\nu}_{t+1}^{\text{AT}}
+    \sigma_{t+1} (1-\mu_{t+1}) A_{t+1}L_{t+1} \alpha k^{\alpha-1}_{t+1} \Bigr] =0 \\
+  %
+  \label{eq:CDICE_foc_cons}
+  \frac{\partial \mathcal{L}}{\partial c_{t}}=0
+      \Leftrightarrow & \; c_t^{-1/\psi}A_{t}^{1-1/\psi}L_{t}
+             -\hat{\lambda}_t = 0\\
+ %
+  \label{eq:CDICE_foc_mu}
+\frac{\partial \mathcal{L}}{\partial \mu_{t}}=0
+      \Leftrightarrow & \; \hat{\lambda}_t \Theta^{\prime}\left(\mu_{t}\right)k_t^{\alpha}  +
+    \lambda_{t}^{\mu} + \hat{\nu}_t^{\text{AT}} \sigma_t A_{t}L_{t}k_{t}^{\alpha} = 0\\
+  %
+  \label{eq:CDICE_foc_MAT}
+\frac{\partial \mathcal{L}}{\partial M_{\text{AT},t+1}}=0
+      \Leftrightarrow & \; \hat{\nu}_t^{\text{AT}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{AT}} \left(1 - b_{12}\right) + \hat{\nu}_{t+1}^{\text{UO}} b_{12} + \hat{\eta}_{t+1}^{\text{AT}} c_1 F_{\text{2XCO2}} \frac{1}{\ln2 M_{\text{AT},t+1}} \right] = 0 \\
+%
+\label{eq:CDICE_foc_MUO}
+\frac{\partial \mathcal{L}}{\partial M_{\text{UO},t+1}}=0
+      \Leftrightarrow & \; \hat{\nu}_t^{\text{UO}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{AT}} b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{UO}} \left(1 - b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right) + \hat{\nu}_{t+1}^{\text{LO}} b_{23} \right] = 0 \\
+ %
+\label{eq:CDICE_foc_MLO}
+\frac{\partial \mathcal{L}}{\partial M_{\text{LO},t+1}}=0
+      \Leftrightarrow & \; \hat{\nu}_t^{\text{LO}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{UO}} b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{LO}} \left(1 - b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right) \right] = 0 \\
+%
+\label{eq:CDICE_foc_TAT}
+\frac{\partial \mathcal{L}}{\partial T_{\text{AT},t+1}}=0
+      \Leftrightarrow & \; \hat{\eta}_t^{\text{AT}} - \hat{\beta}_t \left[-\lambda_{t+1}  \Omega^{\prime}(T_{\text{AT},t+1}) k^{\alpha}_{t+1} + \hat{\eta}_{t+1}^{\text{AT}} (1-c_1\frac{F_{\text{2XCO2}}}{\text{T2xco2}} - c_1 c_3) + \hat{\eta}_{t+1}^{\text{OC}} c_{4}  \right] =0 \\
+ %      
+\label{eq:CDICE_foc_TOC}
+\frac{\partial \mathcal{L}}{\partial T_{\text{OC},t+1}}=0
+      \Leftrightarrow & \; \hat{\eta}_t^{\text{OC}} - \hat{\beta}_t \left[\hat{\eta}_{t+1}^{\text{AT}}  c_1 c_{3}  +  \hat{\eta}_{t+1}^{\text{OC}}  (1 - c_{4})\right]= 0 \\
+ %
+    \label{eq:CDICE_foc_lambda}
+  \frac{\partial \mathcal{L}}{\partial \hat{\lambda}_{t}}=0
+      \Leftrightarrow & \; \left(1 - \Omega\left(T_{\text{AT},t}\right)-\Theta\left(\mu_{t}\right)\right)k_{t}^{\alpha}
+    + \left(1-\delta\right)k_{t}
+    - c_{t}  - \exp\left(g^{A}_{t}+g^{L}_{t}\right)k_{t+1} = 0 \\
+ %
+    \label{eq:CDICE_foc_nuAT}
+  \frac{\partial \mathcal{L}}{\partial \hat{\nu}_t^{\text{AT}}}=0
+      \Leftrightarrow & \; \left(1 - b_{12} \right) M^{\text{AT}}_{t} + b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} M^{\text{UO}}_{t} +   \sigma_t (1-\mu_t) A_{t}L_{t}k_{t}^{\alpha}  + E^{\text{Land}}_t - M^{\text{AT}}_{t+1} = 0 \\
+ %
+    \label{eq:CDICE_foc_nuUO}
+  \frac{\partial \mathcal{L}}{\partial \hat{\nu}_t^{\text{UO}}}=0
+      \Leftrightarrow & \; b_{12}M^{\text{AT}}_{t} + \left(1 - b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right)M^{\text{UO}}_{t} + b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} M^{\text{LO}}_{t} - M^{\text{UO}}_{t+1} = 0 \\
+ %
+    \label{eq:CDICE_foc_nuLO}
+  \frac{\partial \mathcal{L}}{\partial \hat{\nu}_t^{\text{LO}}}=0
+      \Leftrightarrow & \; b_{23}M^{\text{UO}}_{t} + \left(1 - b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right)M^{\text{LO}}_{t} - M^{\text{LO}}_{t+1} = 0 \\
+ %
+    \label{eq:CDICE_foc_etaAT}
+  \frac{\partial \mathcal{L}}{\partial \hat{\eta}_t^{\text{AT}}}=0
+      \Leftrightarrow & \; T^{\text{AT}}_{t} + c_1 \left(F_{\text{2XCO2}} \frac{\log(M^{\text{AT}}_{t}/M^{\text{AT}}_{\text{base}})}{\log(2)} + F^{EX}_{t} \right)  - c_1 \frac{F_{\text{2XCO2}}}{T_{\text{2XCO2}}}T^{\text{AT}}_{t}- c_1c_3 \left(T^{\text{AT}}_{t}-T^{\text{OC}}_{t}\right) - T^{\text{AT}}_{t+1} = 0 \\
+ %
+    \label{eq:CDICE_foc_etaOC}
+  \frac{\partial \mathcal{L}}{\partial \hat{\eta}_t^{\text{OC}}}=0
+      \Leftrightarrow & \; T^{\text{OC}}_{t} + c_4 \left(T^{\text{AT}}_{t}  - T^{\text{OC}}_{t}\right) - T^{\text{OC}}_{t+1} = 0, 
+\end{align}
+%
+as well as the KKT condition, that is,
+\begin{align}
+  \label{eq:CDICE_kkt_mu_equilibrium}
+  1 - \mu_{t} \geq 0 \quad \perp \quad \lambda^{\mu}_{t} \geq 0.
+\end{align}
+%
+In our practical applications, though, we replace the KKT condition \cref{eq:CDICE_kkt_mu_equilibrium} above with the Fischer-Burmeister function (see, e.g.,~\citet{Maliar2019}, and references therein), that is,
+%
+\begin{align}
+  \label{eq:kkt_FB}
+  \Psi^{\text{FB}}\left(\hat{\lambda}^{\mu}_{t}, 1-\mu_{t}\right) =
+  \hat{\lambda}^{\mu}_{t} + \left(1 - \mu_{t}\right) -
+  \sqrt{\left(\hat{\lambda}^{\mu}_{t} \right)^2 + \left(1-\mu_{t}\right)^{2}},
+\end{align}
+%
+where we replaced 
+%
+$\hat{\lambda}^{\mu}_{t}$ such that
+\begin{align}
+  \label{eq:lambda_mu_def}
+  \hat{\lambda}^{\mu}_{t} \defeq -\hat{\lambda}_t \Theta^{\prime}\left(\mu_{t}\right) k_t^{\alpha}  - \hat{\nu}_t^{\text{AT}} \sigma_t A_{t}L_{t}k_{t}^{\alpha} 
+\end{align}
+%
+holds.
+%
+We also use expression~\eqref{eq:CDICE_foc_cons}  to replace consumption $c_t$ in the budget constraint~\eqref{eq:CDICE_foc_lambda}.
+
+One feature that appears when working with first-order conditions of an IAM is the need to compute them not only with respect to the economic choice variables such as $\mu_t$ and $c_t$, but also with respect to the climate variables, despite the fact that they are not choice variables. The reason for this is that one needs to assess the marginal effects of the change in choice variables that propagate through the climate system. Those effects cannot be computed analytically here, which is why we need Lagrange multipliers associated with every single climate equation (cf. expressions~\eqref{eq:CDICE_MATplus}-\eqref{eq:CDICE_TOCplus}) to estimate the shadow price of a marginal change in a respective constraint.
+
+
+Using all the above definitions, the eight individual components that enter the loss function amendable for the DEQN algorithm read as
+%
+\begin{align}
+  \label{eq:CDICE_foc_kplus_ALunit}
+  %
+ & \nonumber l_1:=\exp\left(g^{A}_{t}+g^{L}_{t}\right)\hat{\lambda}_t - \hat{\beta} \Bigl[\hat{\lambda}_{t+1}             \left(\left(1 - \Omega\left(T_{\text{AT},t+1}\right)-\Theta\left(\mu_{t}\right)\right) \alpha k^{\alpha-1}_{t+1} + \left(1-\delta\right) \right) + \\
+ & \hat{\nu}_{t+1}^{\text{AT}} (1-\mu_{t+1}) \sigma_{t+1} A_{t+1}L_{t+1} \alpha k^{\alpha-1}_{t+1} \Bigr] =0 \\
+%
+  \label{eq:CDICE_foc_lambda_ALunit}
+& l_2:=\left(1 - \Omega\left(T_{\text{AT},t}\right)-\Theta\left(\mu_{t}\right)\right)k_{t}^{\alpha}
+    + \left(1-\delta\right)k_{t}
+    - c_{t} - \exp\left(g^{A}_{t}+g^{L}_{t}\right)k_{t+1} = 0 \\
+  %
+  \label{eq:CDICE_foc_MAT_ALunit}
+&l_3:=  \hat{\nu}_t^{\text{AT}} - \beta \left[\hat{\nu}_{t+1}^{\text{AT}} \left(1 - b_{12} \right) + \hat{\nu}_{t+1}^{\text{UO}} b_{12} + \hat{\eta}_{t+1}^{\text{AT}} c_1 F_{\text{2XCO2}} \frac{1}{\ln2 M_{\text{AT},t+1}} \right] = 0 \\
+ %
+\label{eq:CDICE_foc_MUO_ALunit}
+& l_4:=\hat{\nu}_t^{\text{UO}} - \beta \left[\hat{\nu}_{t+1}^{\text{AT}} b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{UO}} \left(1 - b_{12} \frac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right) + \hat{\nu}_{t+1}^{\text{LO}} b_{23} \right] = 0 \\
+ %
+\label{eq:CDICE_foc_MLO_ALunit}
+& l_5:=\hat{\nu}_t^{\text{LO}} - \beta \left[\hat{\nu}_{t+1}^{\text{UO}} b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{LO}} \left(1 - b_{23} \frac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right) \right] = 0 \\
+ %
+\label{eq:CDICE_foc_TAT_ALunit}
+& l_6:=\hat{\eta}_t^{\text{AT}} - \beta \left[-\hat{\lambda}_{t+1}  \Omega^{\prime}(T_{\text{AT},t+1}) k^{\alpha}_{t+1} + \hat{\eta}_{t+1}^{\text{AT}} (1-c_1\frac{F_{\text{2XCO2}}}{\text{T2xco2}} - c_1 c_3) + \hat{\eta}_{t+1}^{\text{OC}} c_{4}  \right] =0 \\
+ %
+\label{eq:CDICE_foc_TOC_ALunit}
+& l_7:= \hat{\eta}_t^{\text{OC}} - \beta \left[\hat{\eta}_{t+1}^{\text{AT}}  c_1 c_{3}  +  \hat{\eta}_{t+1}^{\text{OC}}  (1 - c_{4})\right]= 0\\
+%
+\label{eq:CDICE_kkt_FB_ALunit}
+&l_8:= \hat{\lambda}^{\mu}_{t} + \left(1 - \mu_{t}\right) -
+  \sqrt{\left(\hat{\lambda}^{\mu}_{t} \right)^2 + \left(1-\mu_{t}\right)^{2}} = 0 ,
+%
+\end{align}
+%
+and result in the total loss function given by
+%
+\begin{equation}
+\ell_{\bm{\nu}}:= \frac{1}{N_{\text{path length}}}\sum_{\x_t \text{on sim. path}}\sum_{m=1}^{N_{eq}=8}\left(l_{m}(\x_t, \nn(\x_t))\right)^2 .
+\label{eq:loss_function_DEQN_final}
+\end{equation}
+
+The final ingredient we need for the DEQN algorithm is the evolution of the state $\x_t$ one period forward such that the loss function~\eqref{eq:loss_function_DEQN_final} can be evaluated along a simulated path. In CDICE,  $\x_{t+1}$ is given by
+%
+\begin{equation}
+   \x_{t+1} =  \left(k_{t+1}, M^{\text{AT}}_{t+1}, M^{\text{UO}}_{t+1}, M^{\text{LO}}_{t+1}, T^{\text{AT}}_{t+1}, T^{\text{OC}}_{t+1}, t+1, \right)^T,
+\end{equation}
+%
+where $k_{t+1}$ is updated as a choice variable from the policy function \cref{eq:policy} and the climate variables $M^{\text{AT}}_{t+1}, M^{\text{UO}}_{t+1}, M^{\text{LO}}_{t+1}, T^{\text{AT}}_{t+1}$, and $T^{\text{OC}}_{t+1}$ can be updated via equations~\eqref{eq:CDICE_foc_nuAT}-\eqref{eq:CDICE_foc_etaOC}, whereas time $t$ is simply incremented by one unit.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Error Statistics}
+\label{sec:error_stats}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Table~\ref{table:error} provides detailed error statistics 
+for the benchmark CDICE model at convergence (cf. all the normalized expressions~\eqref{eq:CDICE_foc_kplus_ALunit} - \eqref{eq:CDICE_kkt_FB_ALunit} that contribute to the loss function ~\eqref{eq:loss_function_DEQN_final}). All other models presented in the article reach a similar level of accuracy. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c c c c c c c  } 
+ \toprule
+ Stats. & $l_1$       & $l_2$      & $l_3$    & $l_4$     & $l_5$      & $l_6$     & $l_7$     & $l_8$ \\ 
+ \midrule
+ mean & $1.13e-04$ & $5.32e-04$  & $2.29e-04$ & $3.76e-04$ & $1.15e-04$ & $1.82e-05$ & $3.07e-05$ & $5.04e-04$\\
+std & $6.35e-05$ & $1.23e-04$  & $1.15e-04$ & $7.75e-05$ & $6.31e-05$ & $1.49e-05$ & $2.42e-05$ & $3.17e-04$\\
+min & $1.19e-07$ & $1.90e-05$  & $5.36e-07$ & $5.39e-05$ & $1.18e-05$ & $5.96e-08$ & $<1.0e-8$ & $<1.0e-8$\\
+0.1\% & $1.19e-07$ & $1.91e-05$  & $5.36e-07$ & $5.39e-05$ & $1.18e-05$ & $5.96e-08$ & $<1.0e-8$ & $<1.0e-8$\\
+25\% & $5.82e-05$ & $4.28e-04$  & $1.37e-04$ & $3.23e-04$ & $6.71e-05$ & $8.15e-06$ & $1.09e-05$ & $1.89e-04$\\
+50\% & $1.15e-04$ & $5.28e-04$  & $2.58e-04$ & $3.62e-04$ & $9.70e-05$ & $1.33e-05$ & $2.60e-05$ & $5.06e-04$ \\
+75\% & $1.70e-04$ & $6.34e-04$  & $3.16e-04$ & $4.11e-04$ & $1.58e-04$ & $2.32e-05$ & $4.71e-05$ & $7.83e-04$\\
+max. & $3.26e-04$ & $9.83e-04$  & $5.36e-04$ & $7.40e-04$ & $3.13e-04$ & $8.54e-05$ & $1.26e-04$ & $1.30e-03$\\
+%max & $3.26e-04$ & $9.83e-04$  & $5.36e-04$ & $7.40e-04$ & $3.13e-04$ & $8.54e-05$ & $1.26e-04$ & $1.30e-03$\\
+ \bottomrule
+\end{tabular}
+\caption{Summary statistics of the loss function components along the simulation path for the optimal solution of the CDICE model. Following the literature (see, e.g.,~\cite{https://doi.org/10.3982/ECTA12216}), we define the maximum error as the 99.9 percent quantile of the error distribution.}
+\label{table:error}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{appendices}
+
+\newpage
+\bibliography{references.bib}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
