@@ -32,6 +32,7 @@ hands-on **practical sessions** taught by Maria Pia Lombardo.
 - [References](#references)
 - [Citation](#citation)
 - [Lecturer](#lecturer)
+- [License](#license)
 
 ## Quick Start
 
@@ -66,8 +67,8 @@ To install all dependencies at once:
 pip install -r requirements.txt
 ```
 
-> **Note:** a `requirements.txt` will be added to the repository root before the
-> course begins. Until then, install the packages listed above directly.
+A [`requirements.txt`](requirements.txt) covering the notebooks of all three
+lectures is provided in the repository root.
 
 ### Course Platform
 
@@ -372,3 +373,10 @@ notebooks, or readings by either:
 - emailing [simon.scheidegger@unil.ch](mailto:simon.scheidegger@unil.ch).
 
 Pull requests with fixes are welcome.
+
+## License
+
+The course materials in this repository (slides, code, and notebooks) are
+released under the [Creative Commons CC0 1.0 Universal](LICENSE) public-domain
+dedication — you are free to reuse, adapt, and redistribute them for any purpose.
+Third-party readings retain their original copyright.

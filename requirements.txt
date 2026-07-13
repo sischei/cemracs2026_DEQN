@@ -1,0 +1,18 @@
+# CEMRACS 2026 — "Computational and AI Methods in Climate Economics"
+# Dependencies for the notebooks of all three lectures:
+#   Lecture 1  — Deep Equilibrium Nets (Brock-Mirman, NAS, IRBC, OLG)
+#   Lecture 2  — Surrogate models & Gaussian processes; the DICE model with DEQNs
+#   Lecture 3  — Optimal carbon taxation & deep uncertainty quantification
+#
+# Best-guess environment (not pinned to a tested lockfile): install into a fresh
+# virtual environment with Python 3.10-3.12, e.g.
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+numpy>=1.24,<3
+scipy>=1.10
+pandas>=2.0
+matplotlib>=3.7
+scikit-learn>=1.3       # Gaussian-process regression, kernels, surrogate baselines
+tensorflow>=2.15        # Keras policy networks + Adam training loops (all DEQN notebooks)
+torch>=2.0              # deep kernel learning + surrogate primer (Lecture 2)
+jupyterlab>=4.0         # or classic `notebook`, if preferred
