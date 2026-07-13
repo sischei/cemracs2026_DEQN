@@ -77,7 +77,7 @@ pip install -r requirements.txt
 
 ### Course Platform
 
-- Lecture materials (slides, code, readings) will be made available via this
+- Lecture materials (slides, code, readings) are available via this
   [GitHub repository](https://github.com/sischei/cemracs2026_DEQN) and on
   [**Nuvolos Cloud**](https://nuvolos.cloud/).
 - To enroll in this class, please click on the
@@ -85,10 +85,6 @@ pip install -r requirements.txt
   and follow the steps.
 - All required software and dependencies are pre-installed on the platform.
 - Nuvolos support: <support@nuvolos.cloud>
-
-On the [Nuvolos Cloud](https://nuvolos.cloud/) platform used during the course,
-all dependencies are pre-installed. The `requirements.txt` file is provided for
-participants who wish to run the notebooks on their own machines.
 
 ## Detailed Timetable
 
@@ -150,8 +146,8 @@ Python, using [Python](http://www.python.org/),
 [scikit-learn](https://scikit-learn.org/),
 [TensorFlow](https://www.tensorflow.org/), and
 [TensorFlow Probability](https://www.tensorflow.org/probability) so participants
-can implement and experiment with the introduced methods directly. Each lecture
-is complemented by a **practical session** (taught by Maria Pia Lombardo) in
+can implement and experiment with the introduced methods directly. The lectures
+are complemented by **two practical sessions** (taught by Maria Pia Lombardo) in
 which participants implement and extend the methods themselves.
 
 ## Materials by Lecture
@@ -240,7 +236,7 @@ lecture.
 
 | # | Notebook | Topic |
 |---|----------|-------|
-| 04 | [`04_Structural_Estimation_BM`](lectures/lecture_2/code/04_Structural_Estimation_BM.ipynb) | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
+| 04 | `04_Structural_Estimation_BM` *(to be added)* | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
 
 **Part 2 — DICE hands-on / practice** (used in Lecture 2 Part 2 and in Practical Session 2):
 
@@ -257,7 +253,8 @@ lecture.
 | [`ML_HighDim_JCS.pdf`](lectures/lecture_2/readings/ML_HighDim_JCS.pdf) | Scheidegger & Bilionis (2019). Machine Learning for High-Dimensional Dynamic Stochastic Economies. *Journal of Computational Science* 33, 68-82 |
 | [`DeepSurrogates_JFE.pdf`](lectures/lecture_2/readings/DeepSurrogates_JFE.pdf) | Chen, Didisheim & Scheidegger (2026). Deep Surrogates for Finance: With an Application to Option Pricing. *Journal of Financial Economics* |
 | [`CDICE_Restud_production.pdf`](lectures/lecture_2/readings/CDICE_Restud_production.pdf) | Folini, Friedl, Kuebler & Scheidegger (2024). The Climate in Climate Economics. *Review of Economic Studies* |
-| [Building Interpretable Climate Emulators (EJ)](https://academic.oup.com/ej/article-abstract/136/677/1870/8373818) | Folini, Friedl, Kuebler & Scheidegger (2026). Building Interpretable Climate Emulators for Economics. *The Economic Journal* 136(677), 1870 |
+| [`CDICE_Restud_implementation.pdf`](lectures/lecture_2/readings/CDICE_Restud_implementation.pdf) | Folini, Friedl, Kuebler & Scheidegger (2024). The Climate in Climate Economics — *online appendix*: CDICE model calibration tables and the generic DICE formulation |
+| [`Building_Emulators.pdf`](lectures/lecture_2/readings/Building_Emulators.pdf) | Folini, Friedl, Kuebler & Scheidegger (2026). Building Interpretable Climate Emulators for Economics. *The Economic Journal* 136(677), 1870 |
 
 **Companion code repositories** (for the DICE / climate part):
 
@@ -285,10 +282,6 @@ notebooks — see [`lectures/lecture_3/code/README.md`](lectures/lecture_3/code/
 |---------|-------------|
 | [`DeepUQ_with_an_application_to_IAM.pdf`](lectures/lecture_3/readings/DeepUQ_with_an_application_to_IAM.pdf) | Friedl, Kuebler, Scheidegger & Usui (2023). Deep Uncertainty Quantification: With an Application to Integrated Assessment Models |
 | [`JPE_Macro.pdf`](lectures/lecture_3/readings/JPE_Macro.pdf) | Kuebler, Scheidegger & Surbek (2026). Using Machine Learning to Compute Constrained Optimal Carbon Tax Rules. *Journal of Political Economy: Macroeconomics*, forthcoming |
-
-**Companion code repository** (constrained optimal carbon taxes):
-
-- [`sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules`](https://github.com/sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules) — replication code for Kuebler, Scheidegger & Surbek (2026, *JPE: Macroeconomics*).
 
 ## References
 
