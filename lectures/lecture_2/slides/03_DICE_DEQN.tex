@@ -237,8 +237,8 @@ SCC at time $t$: marginal welfare cost of one extra unit of emissions, converted
 \end{itemize}
 
 \column{0.42\textwidth}
-\includegraphics[width=0.88\linewidth]{fig/cod.png}\\[4pt]
-\includegraphics[width=0.88\linewidth]{fig/examplefunc.pdf}
+\includegraphics[width=0.84\linewidth]{fig/cod.png}\\[4pt]
+\includegraphics[width=0.84\linewidth]{fig/examplefunc.pdf}
 \end{columns}
 \end{frame}
 
@@ -305,7 +305,6 @@ SCC at time $t$: marginal welfare cost of one extra unit of emissions, converted
 \end{exampleblock}
 \end{columns}
 
-\vspace{0.2cm}
 \begin{alertblock}{Challenge}
 Fast is useful, but only if the climate module is calibrated consistently with climate science --- this is where \emphc{CDICE} comes in.
 \end{alertblock}
@@ -367,18 +366,18 @@ Without the climate block this is the deterministic growth model from Lecture 1 
 \begin{frame}{The Economy II: Damages and Abatement}
 \small
 Warming destroys a fraction of gross output; abating emissions costs another fraction:
+\vspace{-0.1cm}
 \begin{align*}
-    \Omega_t &= \psi_1 T^{\text{AT}}_{t} + \psi_2 \left(T^{\text{AT}}_{t}\right)^2
-    && \text{(damages)} \\
-    \Theta_{t} &= \theta_{1,t}\, \mu_t^{\theta_2}
-    && \text{(abatement cost)} \\
+    \Omega_t &= \psi_1 T^{\text{AT}}_{t} + \psi_2 \left(T^{\text{AT}}_{t}\right)^2 \ \text{(damages)},
+    \qquad \Theta_{t} = \theta_{1,t}\, \mu_t^{\theta_2} \ \text{(abatement cost)}, \\
     Y_t &= Y^{\text{Gross}}_t \left(1 - \Theta_t - \Omega_t \right),
     \qquad C_t = Y_t - I_t.
 \end{align*}
 
+\vspace{-0.1cm}
 \begin{columns}[T]
 \column{0.36\textwidth}
-\includegraphics[width=0.92\linewidth]{fig/damage.png}
+\includegraphics[width=0.88\linewidth]{fig/damage.png}
 {\scriptsize Damage fraction $\Omega(T)$: share of gross output lost at warming $T$.}
 
 \column{0.60\textwidth}
@@ -472,7 +471,6 @@ Six deterministic, time-dependent processes drive the model (DICE-2016 forms, an
 &\text{Non-CO$_2$ forcing:} & F^{EX}_{t} &= F^{EX}_{0} + \tfrac{1}{\text{T}/\Delta_t}(F^{EX}_{1} -F^{EX}_{0}) \min(t, \text{T}/\Delta_t)
 \end{align*}
 
-\vspace{0.1cm}
 \begin{alertblock}{Why this matters for us}
 Because $A_t, L_t, \sigma_t, \theta_{1,t}, E_{\text{Land},t}, F^{EX}_t$ all depend on calendar time, the optimal policy is \emphc{not time-invariant}: $C_t \neq C(K_t, M_t, T_t)$ alone. This single fact drives most of the DEQN design choices in Part III.
 \end{alertblock}
@@ -525,10 +523,11 @@ Because $A_t, L_t, \sigma_t, \theta_{1,t}, E_{\text{Land},t}, F^{EX}_t$ all depe
 
 % --- Slide 21: Calibration table ---
 \begin{frame}{CDICE at a Glance: Key Parameter Values}
-\footnotesize
+\scriptsize
+\setlength{\tabcolsep}{3pt}
 \begin{columns}[T]
-\column{0.48\textwidth}
-\textbf{Economy (annual)}
+\column{0.40\textwidth}
+{\footnotesize\textbf{Economy (annual)}}
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
@@ -545,8 +544,8 @@ Initial capital [tn USD] & $K_0$ & 223 \\
 \end{tabular}
 \end{center}
 
-\column{0.48\textwidth}
-\textbf{Climate (annual)}
+\column{0.57\textwidth}
+{\footnotesize\textbf{Climate (annual)}}
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
@@ -554,26 +553,26 @@ Initial capital [tn USD] & $K_0$ & 223 \\
 \midrule
 Carbon transfer AT$\to$UO & $b_{12}$ & 0.054 \\
 Carbon transfer UO$\to$LO & $b_{23}$ & 0.0082 \\
-Equilibrium masses [GtC] & $M_{\text{EQ}}$ & (607, 489, 1281) \\
-Initial masses 2015 [GtC] & $M_{\text{INI}}$ & (851, 628, 1323) \\
-Temperature coefficients & $c_1, c_3, c_4$ & 0.137, 0.73, 0.00689 \\
+Eq.\ masses AT/UO/LO [GtC] & $M_{\text{EQ}}$ & 607, 489, 1281 \\
+Initial masses 2015 [GtC] & $M_{\text{INI}}$ & 851, 628, 1323 \\
+Temp.\ coefficients & $c_1, c_3, c_4$ & 0.137, 0.73, 0.00689 \\
 Forcing CO$_2$ doubling & $F_{\text{2XCO2}}$ & 3.45 W/m$^2$ \\
 ECS & $T_{\text{2XCO2}}$ & 3.25\,\textdegree C \\
-Initial temperatures & $T_0$ & (1.1, 0.27)\,\textdegree C \\
+Initial temperatures & $T_0$ & 1.1, 0.27\,\textdegree C \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{columns}
 
-\vspace{0.3cm}
+\vspace{0.25cm}
 {\footnotesize Full generic calibration tables (DICE-2007, DICE-2016, CDICE side by side): Online Appendix of Folini et al.\ (2025) --- in your \texttt{readings/} folder.}
 \end{frame}
 
 % --- Slide 22: Planner problem ---
 \begin{frame}{The Planner's Problem (Annual CDICE, $\Delta_t = 1$)}
-\vspace{-0.1cm}
+\vspace{-0.15cm}
 \resizebox{\linewidth}{!}{%
-\begin{minipage}{1.18\linewidth}
+\begin{minipage}{1.30\linewidth}
 \begin{align*}
   & \max_{\left\{C_{t}, \mu_t\right\}_{t=0}^{\infty}} \sum_{t=0}^{\infty} \beta^t
   \frac{\left(\frac{C_t}{L_t}\right)^{1-1/\psi} -1}{1-1/\psi} L_t\\
@@ -591,7 +590,6 @@ Initial temperatures & $T_0$ & (1.1, 0.27)\,\textdegree C \\
 \end{minipage}
 }
 
-\vspace{0.15cm}
 {\small One economic constraint, \emphc{five climate constraints}, one inequality constraint --- the Lagrange/KKT multipliers in parentheses will all reappear as \emphc{network outputs} in Part III.}
 \end{frame}
 
@@ -653,10 +651,10 @@ Approximate the unknown policy $p: X \to Y \subset \R^K$ of a model characterize
 
 % --- Slide 26: What breaks ---
 \begin{frame}{What Breaks When We Point This at DICE?}
-\small
+\footnotesize
 In Lecture 1, every model (Brock--Mirman, stochastic growth, IRBC) was \emphc{stationary}: a time-invariant policy on an ergodic state space. DICE is not.
 
-\vspace{0.3em}
+\vspace{0.2em}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{alertblock}{Three obstacles}
@@ -677,7 +675,7 @@ In Lecture 1, every model (Brock--Mirman, stochastic growth, IRBC) was \emphc{st
 \end{exampleblock}
 \end{columns}
 
-\vspace{0.4em}
+\vspace{0.3em}
 And one genuinely new feature: the network must also output \emphc{shadow prices of the climate states}.
 \end{frame}
 
@@ -701,6 +699,7 @@ Feeding $t$ to the network restores a \emphc{recursive} formulation: the policy 
 
 % --- Slide 28: Traeger transform ---
 \begin{frame}{Fix 2a: Compressing the Infinite Horizon (Traeger 2014)}
+\small
 Physical time is unbounded, $t \in [0, \infty)$ --- a poor input for a neural network. Map it into the unit interval via the strictly monotonic transformation
 \[
 \boxed{\;\tau = 1 - \exp\left(-\vartheta t\right), \qquad \tau \in (0, 1]\;}
@@ -708,12 +707,11 @@ Physical time is unbounded, $t \in [0, \infty)$ --- a poor input for a neural ne
 t = -\frac{\ln\left(1-\tau\right)}{\vartheta}.
 \]
 
-\vspace{0.2cm}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[width=0.98\linewidth, height=4.2cm,
+\begin{axis}[width=0.95\linewidth, height=3.1cm,
     xlabel={$t$ [years]}, ylabel={$\tau$},
     xmin=0, xmax=400, ymin=0, ymax=1.05,
     label style={font=\scriptsize}, tick label style={font=\tiny},
@@ -726,7 +724,7 @@ t = -\frac{\ln\left(1-\tau\right)}{\vartheta}.
 \end{center}
 
 \column{0.48\textwidth}
-\begin{itemize}
+\begin{itemize}\itemsep2pt\footnotesize
     \item $\vartheta$ controls where resolution is spent: small $\vartheta$ stretches the transition, large $\vartheta$ compresses it.
     \item The far future --- where the detrended model settles down --- collapses into a neighborhood of $\tau = 1$.
     \item Alternative for transition paths: shooting methods; the recursive formulation scales better with dimension.
@@ -752,7 +750,6 @@ Growth is absorbed into an \emphc{effective discount factor}, which is now time-
 \boxed{\;\hat{\beta}_t := \exp\left(-\rho + \left(1-\tfrac{1}{\psi}\right)g^{A}_{t} + g^{L}_{t}\right)\;}
 \]
 
-\vspace{0.15cm}
 \begin{block}{Why bother?}
 Networks train poorly on inputs and outputs whose scale drifts over the simulation. After detrending, all quantities stay $\mathcal{O}(1)$ along the path --- recall the loss-normalization lessons from Lecture 1.
 \end{block}
@@ -789,18 +786,19 @@ The function approximated by the network maps the 7-dimensional state to
 
 % --- Slide 31: Why shadow prices for climate states ---
 \begin{frame}{Why Learn Shadow Prices for Non-Choice States?}
+\small
 \begin{block}{A distinctive feature of IAM first-order conditions}
 FOCs are needed not only w.r.t.\ the economic choice variables ($c_t$, $\mu_t$), but also w.r.t.\ the \emphc{climate variables}, even though the planner does not choose them.
 \end{block}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 \begin{itemize}
     \item A marginal unit of emissions today changes $M^{\text{AT}}$, which redistributes through the ocean reservoirs, alters radiative forcing, warms both temperature layers, and only \emph{then} feeds back into output via $\Omega(T^{\text{AT}})$ --- over \emphc{centuries}.
     \item The marginal welfare effect of this chain cannot be computed analytically.
     \item Attaching a multiplier to \emph{every} climate equation lets the network learn the \emphc{shadow price of each physical constraint}; the FOCs link them recursively across the chain.
 \end{itemize}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 \begin{exampleblock}{Payoff}
 $\mathrm{SCC}_t \propto -\,\hat{\nu}^{\text{AT}}_t / \hat{\lambda}_t$ --- the headline object of climate economics is a ratio of two network outputs.
 \end{exampleblock}
@@ -810,7 +808,7 @@ $\mathrm{SCC}_t \propto -\,\hat{\nu}^{\text{AT}}_t / \hat{\lambda}_t$ --- the he
 \begin{frame}{The Lagrangian (Detrended)}
 \vspace{-0.1cm}
 \resizebox{\linewidth}{!}{%
-\begin{minipage}{1.22\linewidth}
+\begin{minipage}{1.45\linewidth}
 \begin{align*}
   \mathcal{L} =
   \sum_{t=0}^{\infty}\hat{\beta}_t \Bigl[
@@ -876,10 +874,11 @@ As in Lecture 1 (IRBC irreversibility), replace the complementarity condition wi
 \begin{frame}{The Loss Function I: Economic Residuals}
 \small
 Three of the eight loss components involve the economic block:
+{\footnotesize
 \begin{align*}
 l_1 &:= e^{g^{A}_{t}+g^{L}_{t}}\hat{\lambda}_t - \hat{\beta}_t \Bigl[\hat{\lambda}_{t+1} \left(\left(1 - \Omega\left(T_{\text{AT},t+1}\right)-\Theta\left(\mu_{t}\right)\right) \alpha k^{\alpha-1}_{t+1} + \left(1-\delta\right) \right) \\
 &\qquad\qquad + \hat{\nu}_{t+1}^{\text{AT}} (1-\mu_{t+1})\, \sigma_{t+1} A_{t+1}L_{t+1}\, \alpha k^{\alpha-1}_{t+1} \Bigr]
-&& \text{(Euler equation for capital)} \\[4pt]
+&& \text{(capital Euler)} \\[4pt]
 l_2 &:= \left(1 - \Omega\left(T_{\text{AT},t}\right)-\Theta\left(\mu_{t}\right)\right)k_{t}^{\alpha}
     + \left(1-\delta\right)k_{t}
     - c_{t} - e^{g^{A}_{t}+g^{L}_{t}}k_{t+1}
@@ -887,7 +886,7 @@ l_2 &:= \left(1 - \Omega\left(T_{\text{AT},t}\right)-\Theta\left(\mu_{t}\right)\
 l_8 &:= \hat{\lambda}^{\mu}_{t} + \left(1 - \mu_{t}\right) -
   \sqrt{\left(\hat{\lambda}^{\mu}_{t} \right)^2 + \left(1-\mu_{t}\right)^{2}}
 && \text{(Fischer--Burmeister)}
-\end{align*}
+\end{align*}}
 
 \vspace{0.2cm}
 \begin{itemize}
@@ -900,22 +899,25 @@ l_8 &:= \hat{\lambda}^{\mu}_{t} + \left(1 - \mu_{t}\right) -
 \begin{frame}{The Loss Function II: Climate Shadow-Price Recursions}
 \footnotesize
 The remaining five components propagate marginal effects through the climate chain:
+\vspace{-0.1cm}
+{\scriptsize
 \begin{align*}
 l_3 &:= \hat{\nu}_t^{\text{AT}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{AT}} \left(1 - b_{12} \right) + \hat{\nu}_{t+1}^{\text{UO}} b_{12} + \hat{\eta}_{t+1}^{\text{AT}}\, c_1 F_{\text{2XCO2}} \tfrac{1}{\ln 2\, M_{\text{AT},t+1}} \right]
-&& \text{(carbon AT)} \\[2pt]
+&& \text{(carbon AT)} \\[1pt]
 l_4 &:= \hat{\nu}_t^{\text{UO}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{AT}}\, b_{12} \tfrac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{UO}} \left(1 - b_{12} \tfrac{M^{\text{AT}}_{\text{EQ}}}{M^{\text{UO}}_{\text{EQ}}} - b_{23}\right) + \hat{\nu}_{t+1}^{\text{LO}}\, b_{23} \right]
-&& \text{(carbon UO)} \\[2pt]
+&& \text{(carbon UO)} \\[1pt]
 l_5 &:= \hat{\nu}_t^{\text{LO}} - \hat{\beta}_t \left[\hat{\nu}_{t+1}^{\text{UO}}\, b_{23} \tfrac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} + \hat{\nu}_{t+1}^{\text{LO}} \left(1 - b_{23} \tfrac{M^{\text{UO}}_{\text{EQ}}}{M^{\text{LO}}_{\text{EQ}}} \right) \right]
-&& \text{(carbon LO)} \\[2pt]
+&& \text{(carbon LO)} \\[1pt]
 l_6 &:= \hat{\eta}_t^{\text{AT}} - \hat{\beta}_t \left[-\hat{\lambda}_{t+1}\, \Omega^{\prime}(T_{\text{AT},t+1})\, k^{\alpha}_{t+1} + \hat{\eta}_{t+1}^{\text{AT}} \left(1-c_1\tfrac{F_{\text{2XCO2}}}{T_{\text{2XCO2}}} - c_1 c_3\right) + \hat{\eta}_{t+1}^{\text{OC}}\, c_{4}  \right]
-&& \text{(temperature AT)} \\[2pt]
+&& \text{(temperature AT)} \\[1pt]
 l_7 &:= \hat{\eta}_t^{\text{OC}} - \hat{\beta}_t \left[\hat{\eta}_{t+1}^{\text{AT}}\,  c_1 c_{3}  +  \hat{\eta}_{t+1}^{\text{OC}}\,  (1 - c_{4})\right]
 && \text{(temperature OC)}
-\end{align*}
+\end{align*}}
 
-\vspace{0.15cm}
-\normalsize
+\vspace{-0.05cm}
+\small
 Total loss, evaluated along the simulated path (cf.\ Lecture 1):
+\vspace{-0.1cm}
 \[
 \boxed{\;\ell_{\bm{\varphi}} := \frac{1}{N_{\text{path length}}}\sum_{\x_t \,\text{on sim.\ path}}\ \sum_{m=1}^{N_{eq}=8}\left(l_{m}(\x_t, \nn(\x_t))\right)^2\;}
 \]
@@ -935,7 +937,6 @@ The five climate residuals $l_3$--$l_7$ have a common structure --- each is a \e
     \item $l_7$: deep-ocean warmth is a \emph{pure storage} term --- it only matters because it flows back to the atmosphere ($c_1 c_3$).
 \end{itemize}
 
-\vspace{0.2cm}
 \begin{block}{The economic content}
 This chain is precisely how one marginal ton of carbon today is converted into a discounted stream of future consumption losses --- i.e., how the model computes the SCC.
 \end{block}
@@ -971,8 +972,7 @@ This chain is precisely how one marginal ton of carbon today is converted into a
 \end{itemize}
 \end{columns}
 
-\vspace{0.2cm}
-{\footnotesize Architecture and hyperparameters (layers, width, $\alpha^{\text{learn}}$, $N_{\text{path length}}$, $\vartheta$) live in the replication repo: \url{https://github.com/ClimateChangeEcon/Climate_in_Climate_Economics}.}
+{\footnotesize Architecture and hyperparameters (layers, width, $\alpha^{\text{learn}}$, $N_{\text{path length}}$, $\vartheta$): see \url{https://github.com/ClimateChangeEcon/Climate_in_Climate_Economics}.}
 \end{frame}
 
 % --- Slide 38: Error statistics ---
@@ -1019,7 +1019,8 @@ max & $3.3\text{e-}4$ & $9.8\text{e-}4$ & $5.4\text{e-}4$ & $7.4\text{e-}4$ & $3
 % --- Slide 40: Comparison table ---
 \begin{frame}{From Brock--Mirman and IRBC to DICE}
 \begin{center}
-\small
+\footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{llll}
 \toprule
 & \textbf{Brock--Mirman} & \textbf{IRBC} & \textbf{DICE/CDICE} \\
@@ -1029,7 +1030,7 @@ Stochastic & yes (1 shock) & yes ($N+1$ shocks) & \emphc{no} (deterministic) \\
 Stationary & yes & yes & \emphc{no} (exogenous trends) \\
 Solution object & ergodic policy & ergodic policy & \emphc{transition path from 2015} \\
 Network outputs & 1 & $2N+1$ & 9 (2 choices $+$ 7 multipliers) \\
-Loss components & 1 Euler & $N$ Euler $+$ ARC $+$ $N$ FB & 8 (Euler, budget, \emphc{5 shadow prices}, FB) \\
+Loss components & 1 Euler & $N$ Euler $+$ ARC $+$ $N$ FB & Euler, budget, \emphc{5 shadow prices}, FB \\
 Expectations & quadrature & monomial rule & \emphc{none} \\
 Binding constraint & none & irreversibility (FB) & backstop $\mu \leq 1$ (FB) \\
 Detrending & not needed & not needed & \emphc{efficiency units $+$ $\hat{\beta}_t$} \\

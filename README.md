@@ -69,10 +69,10 @@ pip install -r requirements.txt
 
 - Lecture materials (slides, code, readings) will be made available via this
   [GitHub repository](https://github.com/sischei/cemracs2026_DEQN) and on
-  **Nuvolos Cloud**.
+  [**Nuvolos Cloud**](https://nuvolos.cloud/).
 - To enroll in this class, please click on the enrollment key
-  [`ENROLLMENT_KEY_TBA`](https://app.nuvolos.cloud/) and follow the steps.
-  *(The enrollment key will be circulated before the first lecture.)*
+  [`YXzUpFuVss8`](https://app.eu1.nuvolos.cloud/enroll/class/YXzUpFuVss8) and
+  follow the steps.
 - All required software and dependencies are pre-installed on the platform.
 - Nuvolos support: <support@nuvolos.cloud>
 
@@ -103,7 +103,7 @@ Further self-study: [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/0
 | Time | Topic | Materials |
 |------|-------|-----------|
 | 11:00 – 11:45 | **Part 1** — Surrogate models, Gaussian process regression (GPR), Bayesian active learning, and deep kernel learning; surrogate-based structural estimation (SMM) on the Brock-Mirman model from Lecture 1 | Slides: [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf)<br>Notebooks: [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb), [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb), [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb) |
-| 11:45 – 12:30 | **Part 2** — The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3 | Slides: [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf)<br>Notebooks: [`05_DICE_DEQN`](lectures/lecture_2/code/05_DICE_DEQN.ipynb), [`06_Stochastic_DICE_DEQN`](lectures/lecture_2/code/06_Stochastic_DICE_DEQN.ipynb) |
+| 11:45 – 12:30 | **Part 2** — The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3 | Slides: [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf)<br>Notebooks: [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb), [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb), [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) |
 
 ### Lecture 3 (Part III) — Wednesday, July 15th (16:00–17:30)
 **Deep Uncertainty Quantification and Optimal Taxation**
@@ -114,6 +114,8 @@ Further self-study: [`05_StochasticBM_LossComparison`](lectures/lecture_1/code/0
 
 #### Practical Session 2 — Wednesday, July 15th (17:30–19:00)
 **Hands-on Surrogates / DICE / UQ** *(Maria Pia Lombardo)* — guided exercises building on Lectures 2 and 3. Materials: [`lectures/lecture_2/code/`](lectures/lecture_2/code/), [`lectures/lecture_3/code/`](lectures/lecture_3/code/)
+
+For the DICE part, work through the notebooks in order: [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb) (NumPy warm-up on the carbon cycle and damages), then [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb) (deterministic CDICE solved with a DEQN), and optionally [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) (stochastic extension with AR(1) productivity shocks).
 
 ## Course Overview
 
@@ -242,13 +244,19 @@ lecture.
 | 02 | [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb) | Gaussian-process regression from scratch + Bayesian active learning |
 | 03 | [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb) | Deep kernel learning: a neural feature extractor with a GP head |
 
-**Part 1 (structural estimation) & Part 2 (DICE)** — *to be added:*
+**Part 1 (structural estimation)** — *to be added:*
 
 | # | Notebook | Topic |
 |---|----------|-------|
 | 04 | [`04_Structural_Estimation_BM`](lectures/lecture_2/code/04_Structural_Estimation_BM.ipynb) | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
-| 05 | [`05_DICE_DEQN`](lectures/lecture_2/code/05_DICE_DEQN.ipynb) | Solving the deterministic DICE integrated assessment model with DEQNs |
-| 06 | [`06_Stochastic_DICE_DEQN`](lectures/lecture_2/code/06_Stochastic_DICE_DEQN.ipynb) | Stochastic CDICE-DEQN with Gauss-Hermite quadrature |
+
+**Part 2 — DICE hands-on / practice** (used in Lecture 2 Part 2 and in Practical Session 2):
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 05 | [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb) | DICE carbon cycle and climate damages — a NumPy warm-up (exercise) |
+| 06 | [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb) | Deterministic CDICE solved with a Deep Equilibrium Net — pedagogical port of the production `DEQN_for_IAMs` library |
+| 07 | [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) | Stochastic CDICE-DEQN with AR(1) productivity shocks and Gauss-Hermite quadrature |
 
 #### Readings
 
