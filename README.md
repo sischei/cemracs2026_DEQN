@@ -1,6 +1,10 @@
 # Computational and AI Methods in Climate Economics
 *(CEMRACS 2026 Summer School — "Modeling and AI for Environmental Transition", July 14–15, 2026)*
 
+<p align="center">
+  <img src="fig/hero.png" alt="Computational and AI Methods in Climate Economics — CEMRACS 2026 Summer School" width="100%">
+</p>
+
 This mini-course introduces **computational and AI methods for climate
 economics** to the participants of the
 [CEMRACS 2026](https://cemracs2026.math.cnrs.fr/en/) summer school. Over three
@@ -95,7 +99,7 @@ participants who wish to run the notebooks on their own machines.
 |------|---------|
 | **11:00&nbsp;–&nbsp;11:45** | **Lecture 2 (Part II · 1) — Surrogate methods**<br>Surrogate models, Gaussian process regression (GPR), Bayesian active learning, and deep kernel learning; surrogate-based structural estimation (SMM) on the Brock-Mirman model from Lecture 1.<ul><li>Slides: [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf)</li><li>Notebooks: [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb), [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb), [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb)</li></ul> |
 | **11:45&nbsp;–&nbsp;12:30** | **Lecture 2 (Part II · 2) — The DICE model**<br>The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3.<ul><li>Slides: [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf)</li><li>Notebooks: [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb), [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb), [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb)</li></ul> |
-| **16:00&nbsp;–&nbsp;17:30** | **Lecture 3 (Part III) — Deep UQ and Optimal Taxation**<br>Short deep-surrogate / GP recap, then deep uncertainty quantification (Deep UQ) for stochastic IAMs and constrained optimal carbon tax rules with deep surrogates, applied to the DICE model from Part II.<ul><li>Slides: [`03_DeepUQ_and_Optimal_Taxation`](lectures/lecture_3/slides/03_DeepUQ_and_Optimal_Taxation.pdf)</li><li>Notebooks: [`01_Deep_UQ`](lectures/lecture_3/code/01_Deep_UQ.ipynb), [`02_Optimal_Carbon_Tax`](lectures/lecture_3/code/02_Optimal_Carbon_Tax.ipynb)</li></ul> |
+| **16:00&nbsp;–&nbsp;17:30** | **Lecture 3 (Part III) — Optimal Taxation and Deep UQ**<br>Constrained optimal carbon tax rules with deep surrogates (design), then deep uncertainty quantification (Deep UQ) of the social cost of carbon for stochastic IAMs (quantify) — building on the models of Part II.<ul><li>Slides: [`03_Optimal_Taxation_and_DeepUQ`](lectures/lecture_3/slides/03_Optimal_Taxation_and_DeepUQ.pdf)</li><li>Code: [`lectures/lecture_3/code/`](lectures/lecture_3/code/) → JPE replication repository (see its [README](lectures/lecture_3/code/README.md))</li></ul> |
 | **17:30&nbsp;–&nbsp;19:00** | **Practical Session 2 — Hands-on Surrogates / DICE / UQ** *(Maria Pia Lombardo)*<br>Guided exercises building on Lectures 2 and 3. For the DICE part, work through the notebooks in order:<ul><li>[`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb) — NumPy warm-up on the carbon cycle and damages</li><li>[`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb) — deterministic CDICE solved with a DEQN</li><li>[`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) *(optional)* — stochastic extension with AR(1) productivity shocks</li></ul>See also [`lectures/lecture_3/code/`](lectures/lecture_3/code/). |
 
 ## Course Overview
@@ -110,8 +114,8 @@ economic models, with a focus on climate economics. It covers:
 - Gaussian Process Regression (GPR) and deep surrogate models
 - Surrogate-based structural estimation (SMM)
 - The DICE integrated assessment model, solved globally with DEQNs
-- Deep Uncertainty Quantification (Deep UQ) for stochastic IAMs
 - Constrained optimal carbon taxation via deep surrogates
+- Deep Uncertainty Quantification (Deep UQ) for stochastic IAMs
 
 ### Lecture Progression
 
@@ -127,10 +131,11 @@ estimation (SMM), demonstrated on the same Brock–Mirman model from Lecture 1.
 assessment model, solved globally with DEQNs (deterministic and stochastic
 CDICE). DICE is introduced here and rides continuously into Lecture 3.
 
-**Lecture 3** is the synthesis on the DICE model. After a short recap of the
-deep-surrogate / GP toolkit from Lecture 2 Part 1, it develops deep uncertainty
-quantification for stochastic IAMs and the computation of constrained optimal
-carbon tax rules with deep surrogates.
+**Lecture 3** is the synthesis: the same two-surrogate machinery answers policy
+questions. It first develops the computation of constrained optimal carbon tax
+rules with deep surrogates (the *design* operator, in a stochastic OLG IAM with
+tipping risk), and then deep uncertainty quantification of the social cost of
+carbon for stochastic IAMs (the *quantify* operator).
 
 ### Teaching Format
 
@@ -253,20 +258,20 @@ lecture.
 - [`ClimateChangeEcon/Climate_in_Climate_Economics`](https://github.com/ClimateChangeEcon/Climate_in_Climate_Economics) — CDICE reference code accompanying Folini et al. (2024, *RESTUD*).
 - [`ClimateChangeEcon/Building_Interpretable_Climate_Emulators_forEconomics`](https://github.com/ClimateChangeEcon/Building_Interpretable_Climate_Emulators_forEconomics) — code (and paper) for the interpretable climate emulators (Folini et al., 2026, *The Economic Journal*).
 
-### Lecture 3 — Deep Uncertainty Quantification and Optimal Taxation
+### Lecture 3 — Optimal Taxation and Deep Uncertainty Quantification
 
 #### Slides
 
 | # | Slide Deck | Topic |
 |---|------------|-------|
-| 03 | [`03_DeepUQ_and_Optimal_Taxation`](lectures/lecture_3/slides/03_DeepUQ_and_Optimal_Taxation.pdf) | Deep UQ for stochastic IAMs and constrained optimal carbon taxation |
+| 03 | [`03_Optimal_Taxation_and_DeepUQ`](lectures/lecture_3/slides/03_Optimal_Taxation_and_DeepUQ.pdf) | Constrained optimal carbon taxation with deep surrogates (design), then deep UQ of the social cost of carbon (quantify) |
 
-#### Notebooks
+#### Code
 
-| # | Notebook | Topic |
-|---|----------|-------|
-| 01 | [`01_Deep_UQ`](lectures/lecture_3/code/01_Deep_UQ.ipynb) | Deep uncertainty quantification for stochastic integrated assessment models |
-| 02 | [`02_Optimal_Carbon_Tax`](lectures/lecture_3/code/02_Optimal_Carbon_Tax.ipynb) | Constrained optimal carbon tax rules via deep surrogates |
+Lecture 3 uses the published replication repository instead of dedicated course
+notebooks — see [`lectures/lecture_3/code/README.md`](lectures/lecture_3/code/README.md):
+
+- [`sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules`](https://github.com/sischei/JPE_Macro_Using_ML_to_compute_constrained_optimal_carbon_tax_rules) — the full two-surrogate pipeline of the lecture (DEQN + GP/BAL welfare surrogates + constrained optimization).
 
 #### Readings
 
