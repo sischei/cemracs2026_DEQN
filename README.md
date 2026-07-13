@@ -363,6 +363,7 @@ following papers:
 Visiting Senior Fellow, Grantham Research Institute, London School of Economics
 
 **Practical sessions:** Maria Pia Lombardo
+[mariapia.lombardo@unil.ch](mailto:mariapia.lombardo@unil.ch)
 
 ## Errata and feedback
 
