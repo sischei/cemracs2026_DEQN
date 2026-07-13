@@ -70,9 +70,9 @@ pip install -r requirements.txt
 - Lecture materials (slides, code, readings) will be made available via this
   [GitHub repository](https://github.com/sischei/cemracs2026_DEQN) and on
   [**Nuvolos Cloud**](https://nuvolos.cloud/).
-- To enroll in this class, please click on the enrollment key
-  [`YXzUpFuVss8`](https://app.eu1.nuvolos.cloud/enroll/class/YXzUpFuVss8) and
-  follow the steps.
+- To enroll in this class, please click on the
+  [**enrollment link**](https://app.eu1.nuvolos.cloud/enroll/class/YXzUpFuVss8)
+  and follow the steps.
 - All required software and dependencies are pre-installed on the platform.
 - Nuvolos support: <support@nuvolos.cloud>
 
