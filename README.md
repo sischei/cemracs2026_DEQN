@@ -62,14 +62,18 @@ All notebooks run on **Python 3.10+**. The main dependencies are:
 | [TensorBoard](https://www.tensorflow.org/tensorboard) | Training monitoring |
 | [PyTorch](https://pytorch.org/) >= 2.0 | Deep learning (selected notebooks, optional) |
 
-To install all dependencies at once:
+A [`requirements.txt`](requirements.txt) covering the notebooks of all three
+lectures is provided in the repository root. To install everything at once, we
+recommend a fresh virtual environment:
 
 ```bash
+# create and activate a virtual environment (Python 3.10–3.12)
+python -m venv .venv
+source .venv/bin/activate        # on Windows: .venv\Scripts\activate
+
+# install all course dependencies with pip
 pip install -r requirements.txt
 ```
-
-A [`requirements.txt`](requirements.txt) covering the notebooks of all three
-lectures is provided in the repository root.
 
 ### Course Platform
 
