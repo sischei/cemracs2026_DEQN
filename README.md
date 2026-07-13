@@ -33,6 +33,7 @@ hands-on **practical sessions** taught by Maria Pia Lombardo.
 - [Citation](#citation)
 - [Lecturer](#lecturer)
 - [License](#license)
+- [Going further](#going-further)
 
 ## Quick Start
 
@@ -381,3 +382,10 @@ The course materials in this repository (slides, code, and notebooks) are
 released under the [Creative Commons CC0 1.0 Universal](LICENSE) public-domain
 dedication — you are free to reuse, adapt, and redistribute them for any purpose.
 Third-party readings retain their original copyright.
+
+## Going further
+
+A very comprehensive introduction to **solving and estimating dynamic economic
+models** with deep learning — full lecture notes, slides, and runnable code — can
+be found in the companion repository:
+[**Deep Learning for Solving and Estimating Dynamic Economic Models**](https://github.com/sischei/Deep_Learning_for_Solving_And_Estimating_Dynamic_Economic_Models/tree/main).
