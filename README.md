@@ -82,6 +82,25 @@ participants who wish to run the notebooks on their own machines.
 
 ## Detailed Timetable
 
+### Schedule at a glance
+
+**Day 1 — Tuesday, July 14th**
+
+| Time | Session |
+|------|---------|
+| 16:00 – 17:30 | **Lecture 1 (Part I)** — Deep Equilibrium Nets |
+| 17:30 – 19:00 | **Practical Session 1** — Hands-on DEQN *(Maria Pia Lombardo)* |
+
+**Day 2 — Wednesday, July 15th**
+
+| Time | Session |
+|------|---------|
+| 11:00 – 12:30 | **Lecture 2 (Part II)** — Surrogate Methods, Structural Estimation, and the DICE Model |
+| 16:00 – 17:30 | **Lecture 3 (Part III)** — Deep Uncertainty Quantification and Optimal Taxation |
+| 17:30 – 19:00 | **Practical Session 2** — Hands-on Surrogates / DICE / UQ *(Maria Pia Lombardo)* |
+
+---
+
 ### Lecture 1 (Part I) — Tuesday, July 14th (16:00–17:30)
 **Deep Equilibrium Nets**
 
