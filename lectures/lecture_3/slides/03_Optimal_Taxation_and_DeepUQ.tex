@@ -171,8 +171,8 @@ Tax Rules,'' \emph{Journal of Political Economy: Macroeconomics}, and Friedl, K\
 \textbf{The stack so far:}
 \begin{itemize}\itemsep1pt
   \item \textbf{Lecture 1:} Deep Equilibrium Nets solve dynamic stochastic models globally by minimizing equilibrium residuals along simulated paths.
-  \item \textbf{Lecture 2 (Part 1):} surrogates with parameters as \emph{pseudo-states} decouple solving from asking; GP regression and Bayesian active learning make expensive maps cheap; SMM estimation rode on top.
-  \item \textbf{Lecture 2 (Part 2):} the DICE/CDICE climate--economy model, solved globally with DEQNs.
+  \item \textbf{Lecture 2 (Part 1):} the DICE/CDICE climate--economy model, solved globally with DEQNs.
+  \item \textbf{Lecture 2 (Part 2):} surrogates with parameters as \emph{pseudo-states} decouple solving from asking; GP regression and Bayesian active learning make expensive maps cheap; SMM estimation rode on top.
 \end{itemize}
 \vspace{0.15em}
 \textbf{The pivot:} estimation treats $\bm{\theta}$ as unknown but \emphc{fixed}. Two questions remain:
@@ -202,7 +202,7 @@ Three questions ride on one parametric surrogate. Lecture 2 asked the first; tod
 \toprule
 \textbf{Operator} & \textbf{Question} & \textbf{Post-processing} & \textbf{Where} \\
 \midrule
-\emphc{Estimate} & Which parameters fit the data? & $\argmin$ of an SMM criterion over $\bm{\theta}$ & Lecture 2 (Part 1) \\[3pt]
+\emphc{Estimate} & Which parameters fit the data? & $\argmin$ of an SMM criterion over $\bm{\theta}$ & Lecture 2 (Part 2) \\[3pt]
 \emphc{Design} & Which policy is best? & constrained $\argmax$ of a welfare QoI over $\vartheta$ & Part III (carbon taxes) \\[3pt]
 \emphc{Quantify} & Which parameter uncertainties matter? & propagate $p(\bm{\theta})$ through a QoI: univariate effects, Sobol' indices, Shapley values & Part IV (SCC: social cost of carbon) \\
 \bottomrule
@@ -253,7 +253,7 @@ Identical machinery throughout: the \emphc{two-surrogate pipeline}. Surrogate 1 
 \begin{itemize}\itemsep1pt
   \item \key{Carbon taxation}: widely supported policy response to the climate change problem.
   \item The tax level is based on the social cost of carbon (SCC): the marginal loss caused by an extra ton of CO$_2$ emissions.
-  \item SCC values are computed with \key{integrated assessment models} (IAMs; Lecture 2, Part 2).
+  \item SCC values are computed with \key{integrated assessment models} (IAMs; Lecture 2, Part 1).
   \item IAMs are subject to \key{significant parametric uncertainty, model uncertainty, and climate risks of tipping points}.
 \end{itemize}
 \end{column}
@@ -329,7 +329,7 @@ Second surrogate & none needed: moments were cheap & GP regression + Bayesian ac
 \textbf{Cost that does not scale up:} Surrogate 1 trains in about 4h from scratch on a laptop, minutes when warm-started; Surrogate 2 needs only 500 simulations (450 Latin hypercube + 50 actively learned).
 
 \vspace{0.3em}
-{\footnotesize \emph{Recaps if needed:} DEQNs --- Lecture 1; GP regression and Bayesian active learning --- Lecture 2 (Part 1).}
+{\footnotesize \emph{Recaps if needed:} DEQNs --- Lecture 1; GP regression and Bayesian active learning --- Lecture 2 (Part 2).}
 \end{frame}
 
 % --- Operators formally ---
@@ -670,7 +670,7 @@ y = \big[a_{t+1,j+1},\; v_{t,j}\big]
     \end{columns}
 
 \vspace{0.2em}
-{\footnotesize \emph{The GP + BAL machinery is exactly Lecture 2 (Part 1). Robustness:} training is anchored on a handful of trusted reference solutions to avoid \emph{lazy learning} --- the flat-in-the-parameter failure mode; 10--20 anchors suffice \citep{friedlDeep2023}.}
+{\footnotesize \emph{The GP + BAL machinery is exactly Lecture 2 (Part 2). Robustness:} training is anchored on a handful of trusted reference solutions to avoid \emph{lazy learning} --- the flat-in-the-parameter failure mode; 10--20 anchors suffice \citep{friedlDeep2023}.}
 \end{frame}
 
 % --- Maximizing welfare ---
@@ -969,7 +969,7 @@ Friedl, K\"ubler, Scheidegger \& Usui (2023)}
 \begin{frame}
 \frametitle{A Stochastic IAM with Learning about the ECS}
 \vspace{-0.2em}
-{\scriptsize Back to the global IAM of Lecture 2 (Part 2): CDICE, now with recursive (Epstein--Zin) utility, a stochastic equilibrium climate sensitivity (ECS), and Bayesian learning.\par}
+{\scriptsize Back to the global IAM of Lecture 2 (Part 1): CDICE, now with recursive (Epstein--Zin) utility, a stochastic equilibrium climate sensitivity (ECS), and Bayesian learning.\par}
 \vspace{-0.2em}
 \begin{center}
 \resizebox{0.42\linewidth}{!}{

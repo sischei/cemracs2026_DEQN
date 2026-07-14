@@ -14,4 +14,4 @@ course notebooks:
   the Pareto-improving tax rules.
 
 For the hands-on part of Practical Session 2, the DICE notebooks live in
-[`lectures/lecture_2/code/`](../../lecture_2/code/) (notebooks `05`–`07`).
+[`lectures/lecture_2/code/`](../../lecture_2/code/) (notebooks `01`–`03`).

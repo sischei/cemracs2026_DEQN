@@ -99,10 +99,10 @@ pip install -r requirements.txt
 
 | Time | Session |
 |------|---------|
-| **11:00&nbsp;–&nbsp;11:45** | **Lecture 2 (Part II · 1) — Surrogate methods**<br>Surrogate models, Gaussian process regression (GPR), Bayesian active learning, and deep kernel learning; surrogate-based structural estimation (SMM) on the Brock-Mirman model from Lecture 1.<ul><li>Slides: [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf)</li><li>Notebooks: [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb), [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb), [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb)</li></ul> |
-| **11:45&nbsp;–&nbsp;12:30** | **Lecture 2 (Part II · 2) — The DICE model**<br>The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3.<ul><li>Slides: [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf)</li><li>Notebooks: [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb), [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb), [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb)</li></ul> |
+| **11:00&nbsp;–&nbsp;11:45** | **Lecture 2 (Part II · 1) — The DICE model**<br>The DICE integrated assessment model, solved globally with DEQNs (deterministic and stochastic CDICE); carries the DICE object into Lecture 3.<ul><li>Slides: [`02_DICE_DEQN`](lectures/lecture_2/slides/02_DICE_DEQN.pdf)</li><li>Notebooks: [`01_Climate_Exercise`](lectures/lecture_2/code/01_Climate_Exercise.ipynb), [`02_DICE_DEQN`](lectures/lecture_2/code/02_DICE_DEQN.ipynb), [`03_Stochastic_DICE_DEQN`](lectures/lecture_2/code/03_Stochastic_DICE_DEQN.ipynb)</li></ul> |
+| **11:45&nbsp;–&nbsp;12:30** | **Lecture 2 (Part II · 2) — Surrogate methods**<br>Surrogate models, Gaussian process regression (GPR), Bayesian active learning, and deep kernel learning; surrogate-based structural estimation (SMM) on the Brock-Mirman model from Lecture 1.<ul><li>Slides: [`03_Surrogates_and_GPs`](lectures/lecture_2/slides/03_Surrogates_and_GPs.pdf)</li><li>Notebooks: [`04_Surrogate_Primer`](lectures/lecture_2/code/04_Surrogate_Primer.ipynb), [`05_GP_and_BAL`](lectures/lecture_2/code/05_GP_and_BAL.ipynb), [`06_Deep_Kernel_Learning`](lectures/lecture_2/code/06_Deep_Kernel_Learning.ipynb)</li></ul> |
 | **16:00&nbsp;–&nbsp;17:30** | **Lecture 3 (Part III) — Optimal Taxation and Deep UQ**<br>Constrained optimal carbon tax rules with deep surrogates (design), then deep uncertainty quantification (Deep UQ) of the social cost of carbon for stochastic IAMs (quantify) — building on the models of Part II.<ul><li>Slides: [`03_Optimal_Taxation_and_DeepUQ`](lectures/lecture_3/slides/03_Optimal_Taxation_and_DeepUQ.pdf)</li><li>Code: [`lectures/lecture_3/code/`](lectures/lecture_3/code/) → JPE replication repository (see its [README](lectures/lecture_3/code/README.md))</li></ul> |
-| **17:30&nbsp;–&nbsp;19:00** | **Practical Session 2 — Hands-on Surrogates / DICE / UQ** *(Maria Pia Lombardo)*<br>Guided exercises building on Lectures 2 and 3. For the DICE part, work through the notebooks in order:<ul><li>[`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb) — NumPy warm-up on the carbon cycle and damages</li><li>[`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb) — deterministic CDICE solved with a DEQN</li><li>[`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) *(optional)* — stochastic extension with AR(1) productivity shocks</li></ul>See also [`lectures/lecture_3/code/`](lectures/lecture_3/code/). |
+| **17:30&nbsp;–&nbsp;19:00** | **Practical Session 2 — Hands-on Surrogates / DICE / UQ** *(Maria Pia Lombardo)*<br>Guided exercises building on Lectures 2 and 3. For the DICE part, work through the notebooks in order:<ul><li>[`01_Climate_Exercise`](lectures/lecture_2/code/01_Climate_Exercise.ipynb) — NumPy warm-up on the carbon cycle and damages</li><li>[`02_DICE_DEQN`](lectures/lecture_2/code/02_DICE_DEQN.ipynb) — deterministic CDICE solved with a DEQN</li><li>[`03_Stochastic_DICE_DEQN`](lectures/lecture_2/code/03_Stochastic_DICE_DEQN.ipynb) *(optional)* — stochastic extension with AR(1) productivity shocks</li></ul>See also [`lectures/lecture_3/code/`](lectures/lecture_3/code/). |
 
 ## Course Overview
 
@@ -113,9 +113,9 @@ science to solve, estimate, and quantify uncertainty in dynamic stochastic
 economic models, with a focus on climate economics. It covers:
 
 - Deep Equilibrium Nets (DEQNs) for dynamic stochastic models
+- The DICE integrated assessment model, solved globally with DEQNs
 - Gaussian Process Regression (GPR) and deep surrogate models
 - Surrogate-based structural estimation (SMM)
-- The DICE integrated assessment model, solved globally with DEQNs
 - Constrained optimal carbon taxation via deep surrogates
 - Deep Uncertainty Quantification (Deep UQ) for stochastic IAMs
 
@@ -125,13 +125,13 @@ economic models, with a focus on climate economics. It covers:
 technique that represents equilibrium policy functions with neural networks and
 trains them to minimize equilibrium-condition (Euler) residuals.
 
-**Lecture 2** adds a second toolkit and the central application, in two parts.
-*Part 1* introduces surrogate methods — Gaussian process regression, deep
-surrogates, and Bayesian active learning — and surrogate-based structural
-estimation (SMM), demonstrated on the same Brock–Mirman model from Lecture 1.
-*Part 2* then brings in the climate–economy application: the DICE integrated
+**Lecture 2** adds the central application and a second toolkit, in two parts.
+*Part 1* brings in the climate–economy application: the DICE integrated
 assessment model, solved globally with DEQNs (deterministic and stochastic
 CDICE). DICE is introduced here and rides continuously into Lecture 3.
+*Part 2* then introduces surrogate methods — Gaussian process regression, deep
+surrogates, and Bayesian active learning — and surrogate-based structural
+estimation (SMM), demonstrated on the same Brock–Mirman model from Lecture 1.
 
 **Lecture 3** is the synthesis: the same two-surrogate machinery answers policy
 questions. It first develops the computation of constrained optimal carbon tax
@@ -213,38 +213,38 @@ lecture.
 |---------|-------------|
 | [`Azinovic_Gaegauf_Scheidegger_2022_DEQN.pdf`](lectures/lecture_1/readings/Azinovic_Gaegauf_Scheidegger_2022_DEQN.pdf) | Azinovic, Gaegauf & Scheidegger (2022). Deep Equilibrium Nets. *International Economic Review* 63(4), 1471-1525 |
 
-### Lecture 2 — Surrogate Methods, Structural Estimation, and the DICE Model
+### Lecture 2 — The DICE Model, Surrogate Methods, and Structural Estimation
 
 #### Slides
 
 | # | Slide Deck | Topic |
 |---|------------|-------|
-| 02 | [`02_Surrogates_and_GPs`](lectures/lecture_2/slides/02_Surrogates_and_GPs.pdf) | **Part 1** — Surrogate models and Gaussian processes: deep surrogates, GP regression, Bayesian active learning, deep kernel learning; applications to structural estimation, UQ, and optimal policy |
-| 03 | [`03_DICE_DEQN`](lectures/lecture_2/slides/03_DICE_DEQN.pdf) | **Part 2** — Solving the DICE integrated assessment model with DEQNs |
+| 02 | [`02_DICE_DEQN`](lectures/lecture_2/slides/02_DICE_DEQN.pdf) | **Part 1** — Solving the DICE integrated assessment model with DEQNs |
+| 03 | [`03_Surrogates_and_GPs`](lectures/lecture_2/slides/03_Surrogates_and_GPs.pdf) | **Part 2** — Surrogate models and Gaussian processes: deep surrogates, GP regression, Bayesian active learning, deep kernel learning; applications to structural estimation, UQ, and optimal policy |
 
 #### Notebooks
 
-**Part 1 — Surrogates & GPs:**
+**Part 1 — DICE hands-on / practice** (used in Lecture 2 Part 1 and in Practical Session 2):
 
 | # | Notebook | Topic |
 |---|----------|-------|
-| 01 | [`01_Surrogate_Primer`](lectures/lecture_2/code/01_Surrogate_Primer.ipynb) | Deep surrogate primer: a Black-Scholes implied-volatility surrogate |
-| 02 | [`02_GP_and_BAL`](lectures/lecture_2/code/02_GP_and_BAL.ipynb) | Gaussian-process regression from scratch + Bayesian active learning |
-| 03 | [`03_Deep_Kernel_Learning`](lectures/lecture_2/code/03_Deep_Kernel_Learning.ipynb) | Deep kernel learning: a neural feature extractor with a GP head |
+| 01 | [`01_Climate_Exercise`](lectures/lecture_2/code/01_Climate_Exercise.ipynb) | DICE carbon cycle and climate damages — a NumPy warm-up (exercise) |
+| 02 | [`02_DICE_DEQN`](lectures/lecture_2/code/02_DICE_DEQN.ipynb) | Deterministic CDICE solved with a Deep Equilibrium Net — pedagogical port of the production `DEQN_for_IAMs` library |
+| 03 | [`03_Stochastic_DICE_DEQN`](lectures/lecture_2/code/03_Stochastic_DICE_DEQN.ipynb) | Stochastic CDICE-DEQN with AR(1) productivity shocks and Gauss-Hermite quadrature |
 
-**Part 1 (structural estimation)** — *to be added:*
-
-| # | Notebook | Topic |
-|---|----------|-------|
-| 04 | `04_Structural_Estimation_BM` *(to be added)* | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
-
-**Part 2 — DICE hands-on / practice** (used in Lecture 2 Part 2 and in Practical Session 2):
+**Part 2 — Surrogates & GPs:**
 
 | # | Notebook | Topic |
 |---|----------|-------|
-| 05 | [`05_Climate_Exercise`](lectures/lecture_2/code/05_Climate_Exercise.ipynb) | DICE carbon cycle and climate damages — a NumPy warm-up (exercise) |
-| 06 | [`06_DICE_DEQN`](lectures/lecture_2/code/06_DICE_DEQN.ipynb) | Deterministic CDICE solved with a Deep Equilibrium Net — pedagogical port of the production `DEQN_for_IAMs` library |
-| 07 | [`07_Stochastic_DICE_DEQN`](lectures/lecture_2/code/07_Stochastic_DICE_DEQN.ipynb) | Stochastic CDICE-DEQN with AR(1) productivity shocks and Gauss-Hermite quadrature |
+| 04 | [`04_Surrogate_Primer`](lectures/lecture_2/code/04_Surrogate_Primer.ipynb) | Deep surrogate primer: a Black-Scholes implied-volatility surrogate |
+| 05 | [`05_GP_and_BAL`](lectures/lecture_2/code/05_GP_and_BAL.ipynb) | Gaussian-process regression from scratch + Bayesian active learning |
+| 06 | [`06_Deep_Kernel_Learning`](lectures/lecture_2/code/06_Deep_Kernel_Learning.ipynb) | Deep kernel learning: a neural feature extractor with a GP head |
+
+**Part 2 (structural estimation)** — *to be added:*
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 07 | `07_Structural_Estimation_BM` *(to be added)* | Surrogate-based structural estimation (SMM) on the Brock-Mirman model |
 
 #### Readings
 
