@@ -820,7 +820,7 @@ $\Rightarrow$ \emphc{No labels needed}; we call this \textbf{self-supervised} le
 \begin{frame}{Training Algorithm for DEQNs}
 \begin{block}{Algorithm 1: Deep Equilibrium Net Training}
 \begin{algorithmic}
-\footnotesize
+\scriptsize
 \STATE \textbf{Input:} Initial state $\x_0$, network $\mathcal{N}_\theta$, learning rate $\eta$, episodes $E$, simulation horizon $T_{\mathrm{sim}}$, training steps $T_{\mathrm{train}}$
 \FOR{episode $e = 1, \ldots, E$}
     \STATE \textbf{Simulate path:} $\x_0 \to \x_1 \to \cdots \to \x_{T_{\mathrm{sim}}}$ using $\mathcal{N}_\theta$ and transition law\footnote{The IRBC/OLG notebooks (Sessions 3--4) use a \emph{persistent} variant: trajectories continue across episodes, with no reset.}
@@ -835,7 +835,7 @@ $\Rightarrow$ \emphc{No labels needed}; we call this \textbf{self-supervised} le
 \end{block}
 
 \vspace{0.2em}
-{\small \textbf{Note:} Training points come from the \emphc{model's own simulation}, so the network learns on the ergodic distribution, focusing on economically relevant regions.}
+{\small \textbf{Note:} Training points come from the \emphc{model's own simulation}, so the network learns on the ergodic distribution of economically relevant regions.}
 \end{frame}
 
 % --- Slide 21: Supervised vs Self-Supervised ---
