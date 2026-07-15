@@ -75,15 +75,8 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
-% ---------- Appendix frame-number bookkeeping ----------
-\newcommand{\backupbegin}{
-   \newcounter{framenumberappendix}
-   \setcounter{framenumberappendix}{\value{framenumber}}
-}
-\newcommand{\backupend}{
-   \addtocounter{framenumberappendix}{-\value{framenumber}}
-   \addtocounter{framenumber}{\value{framenumberappendix}}
-}
+% ---------- Appendix frame numbering ----------
+\usepackage{appendixnumberbeamer}
 
 % ---------- Title ----------
 \title[CEMRACS 2026 $\cdot$ Optimal Taxation \& Deep UQ]
@@ -822,6 +815,65 @@ Same object as the SMM criterion, opposite sign of intent: there we minimized di
 \end{block}
 \end{frame}
 
+% --- Calibration ---
+\begin{frame}[fragile]{Calibration}
+\vspace{-0.2em}
+\begin{table}[]
+    \centering
+    \footnotesize
+    \begin{tabular}{ccc}
+    \hline \hline
+  \textbf{Symbol} & \textbf{Parameter} & \textbf{Value} \\
+    \hline
+    $\beta$  & Discount factor& 0.9 \\
+    $\sigma$  & Relative risk aversion & 3 \\
+    $\alpha$  & Capital share & 0.3 \\
+    $\delta$  &Depreciation & 0.2 \\
+    $\sigma_{ccr}$  & Climate sensitivity & 1.7 \\
+    $\psi_1$  & parameter damage function & 13.16 \\
+    $\theta_1$  & Intercept of control cost function & 0.7 \\
+    $\theta_2$  & Exponent of control cost function & 2.6 \\
+    $\kappa_{0}$  & Initial carbon intensity & 0.35032 \\
+    $\rho_0$  & Initial AR(1) param for carbon intensity & 1.08 \\
+    $\rho_{\infty}$  & Final AR(1) param for carbon intensity & 0.91 \\
+    $\delta^{\rho}$  & AR(1) param depreciation for carbon intensity  & 0.04 \\
+    $E_0$ & initial stock of carbon thGtC& 0.851 \\
+    $L$ & Labor (to match initial emissions) & 600 \\
+    \hline
+\end{tabular}
+    \caption{Parameterization of the OLG Model.}
+    \label{tab:parameters}
+\end{table}
+\end{frame}
+
+% --- BAU vs RCP ---
+\begin{frame}{BAU Scenario versus RCP Scenarios}
+    \centering
+    \includegraphics[width=0.7\textwidth, height=0.4\textheight, keepaspectratio]{tax/BAU_SOLG.png}
+
+    \vspace{0.3em}
+    \begin{columns}[t]
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            \textbf{Left: Global CO$_2$ Emissions}
+            \begin{itemize}
+                \item Comparison of our model's BAU against IPCC Representative Concentration Pathways (RCP).
+                \item Our endogenous emissions path tracks closely with \textbf{RCP 4.5}.
+                \item Base year (0) corresponds to 2017.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            \textbf{Right: Global Warming Projections}
+            \begin{itemize}
+                \item Projected mean warming reaches $\approx \mathbf{3^\circ C}$ over 150 years.
+                \item Substantial uncertainty exists: range of \textbf{2.5°C to 3.6°C}.
+                \item Highlights significant tail risk in the absence of policy.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 % --- Three policy scenarios ---
 \begin{frame}{Three Policy Scenarios}
 \small
@@ -887,6 +939,46 @@ The resulting constrained optimization problem reads as:
 \end{columns}
 \end{frame}
 
+% --- Temperature (scenario 1) ---
+\begin{frame}{Temperature (Scenario 1: Unconstrained)}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.92\linewidth]{tax/Temp_case1.png}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+        \small
+        \textbf{Outcomes:}
+        \begin{itemize}
+            \setlength\itemsep{0.8em}
+            \item \textbf{Aggressive Mitigation:} Stabilizes mean warming at \textbf{$\approx$2.7\,°C}.
+            \item \textbf{Tail-Risk Insurance:} The 99th percentile is capped at $\approx$3.1\,°C.
+            \item \textbf{The Mechanism:} Requires immediate, heavy taxation ($\approx$70\% average after 150 years).
+            \item \textbf{The Cost:} Imposes up to \textbf{$-$5\% welfare losses} on current older cohorts.
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+% --- Emissions (welfare maximizing) ---
+\begin{frame}{Emissions (Welfare Maximizing)}
+\begin{columns}[c]
+    \begin{column}{0.55\textwidth}
+        \centering
+        \includegraphics[width=0.92\linewidth]{tax/paper/lin_S_10trans_unif_emissions.pdf}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \small
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item \textbf{Immediate Shock:} Emissions drop $\approx \mathbf{25\%}$ below BAU within the first 50 years.
+            \item \textbf{Eliminating the Extremes:} The policy successfully truncates the high-emission tail (the red shaded area).
+            \item \textbf{Convergence:} Post-2100, the gap narrows as exogenous carbon intensity declines naturally.
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
 % --- Optimal welfare distribution ---
 \begin{frame}{Optimal Welfare Distribution}
 \begin{columns}[c]
@@ -908,12 +1000,20 @@ The resulting constrained optimization problem reads as:
 \end{columns}
 \end{frame}
 
+% --- The challenge (pivot to Pareto) ---
+\begin{frame}{The Challenge}
+\begin{itemize}
+    \setlength\itemsep{1.2em}
+    \item The welfare-maximizing tax (simple example) reduces warming to $2.7^\circ$C.
+    \item \textbf{But:} It imposes welfare losses of up to \textbf{5\%} on current older generations.
+    \item \textbf{Result:} The policy is economically efficient but politically infeasible.
+    \item \textbf{Goal:} Can we design a tax \textit{and} transfer scheme where $\tilde{U}_t \ge U_t$ for all $t$?
+\end{itemize}
+\end{frame}
+
 % --- Scenario 2 ---
 \begin{frame}{Scenario 2: Pareto-Improving Policy}
 \footnotesize
-Lead-in: the welfare-maximizing tax reduces warming to $2.7^\circ$C, \textbf{but} imposes welfare losses of up to \textbf{5\%} on current older generations: economically efficient, politically infeasible. \textbf{Goal:} a tax \textit{and} transfer scheme where $\tilde{U}_t \ge U_t$ for all $t$.
-
-\vspace{0.2em}
 For 40 values of $t$:
 \begin{equation}
     \mu_{*,t}(\vartheta) \;=\; \widehat{\mathrm{QoI}}_t(\vartheta)
@@ -999,7 +1099,28 @@ The optimal transfer shares allocate resources to specific cohorts to satisfy th
             \item \textbf{Crucial Insurance:} The 99th percentile \textbf{never exceeds 3.5\,°C}.
             \item \textbf{Tail Truncation:} The policy deliberately eliminates the catastrophic tail ($>$3.6\,°C under BAU).
             \item \textbf{The Win:} Achieved with optimal transfers $\to$ \textbf{no generation loses}.
-            \item \keyc{\textbf{Conclusion:} The Pareto-optimal policy functions primarily as disaster insurance rather than aggressive mitigation.} {\footnotesize (Emissions distribution: appendix.)}
+            \item \keyc{\textbf{Conclusion:} The Pareto-optimal policy functions primarily as disaster insurance rather than aggressive mitigation.}
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+% --- Emissions (Pareto) ---
+\begin{frame}{Emissions: Mitigating Risk (Scenario 2)}
+\begin{columns}
+    \begin{column}{0.55\textwidth}
+        \begin{figure}[th!]
+            \centering
+            \includegraphics[width=0.92\linewidth]{tax/paper/lin_S_trans_emissions_dist.pdf}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \footnotesize
+        \begin{itemize}
+             \setlength\itemsep{0.9em}
+            \item \textbf{Modest Average Reduction:} The mean emissions path is not drastically lower than BAU (required to preserve current consumption).
+            \item \textbf{Tail Truncation:} The policy's primary physical impact is eliminating the high-emissions upside.
+            \item \textbf{Result:} The $99^{th}$ percentile of emissions drops below $40~GtCO_2$ by 2070 (20 years earlier than BAU).
         \end{itemize}
     \end{column}
 \end{columns}
@@ -1431,127 +1552,6 @@ Tax replication code: \texttt{lectures/lecture\_3/code/}}
 % APPENDIX
 % ============================================================================
 \appendix
-\backupbegin
-
-% --- Calibration ---
-\begin{frame}[fragile]{Appendix: Calibration}
-\vspace{-0.2em}
-\begin{table}[]
-    \centering
-    \footnotesize
-    \begin{tabular}{ccc}
-    \hline \hline
-  \textbf{Symbol} & \textbf{Parameter} & \textbf{Value} \\
-    \hline
-    $\beta$  & Discount factor& 0.9 \\
-    $\sigma$  & Relative risk aversion & 3 \\
-    $\alpha$  & Capital share & 0.3 \\
-    $\delta$  &Depreciation & 0.2 \\
-    $\sigma_{ccr}$  & Climate sensitivity & 1.7 \\
-    $\psi_1$  & parameter damage function & 13.16 \\
-    $\theta_1$  & Intercept of control cost function & 0.7 \\
-    $\theta_2$  & Exponent of control cost function & 2.6 \\
-    $\kappa_{0}$  & Initial carbon intensity & 0.35032 \\
-    $\rho_0$  & Initial AR(1) param for carbon intensity & 1.08 \\
-    $\rho_{\infty}$  & Final AR(1) param for carbon intensity & 0.91 \\
-    $\delta^{\rho}$  & AR(1) param depreciation for carbon intensity  & 0.04 \\
-    $E_0$ & initial stock of carbon thGtC& 0.851 \\
-    $L$ & Labor (to match initial emissions) & 600 \\
-    \hline
-\end{tabular}
-    \caption{Parameterization of the OLG Model.}
-    \label{tab:parameters}
-\end{table}
-\end{frame}
-
-% --- BAU vs RCP ---
-\begin{frame}{Appendix: BAU Scenario versus RCP Scenarios}
-    \centering
-    \includegraphics[width=0.7\textwidth, height=0.4\textheight, keepaspectratio]{tax/BAU_SOLG.png}
-
-    \vspace{0.3em}
-    \begin{columns}[t]
-        \begin{column}{0.48\textwidth}
-            \footnotesize
-            \textbf{Left: Global CO$_2$ Emissions}
-            \begin{itemize}
-                \item Comparison of our model's BAU against IPCC Representative Concentration Pathways (RCP).
-                \item Our endogenous emissions path tracks closely with \textbf{RCP 4.5}.
-                \item Base year (0) corresponds to 2017.
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \footnotesize
-            \textbf{Right: Global Warming Projections}
-            \begin{itemize}
-                \item Projected mean warming reaches $\approx \mathbf{3^\circ C}$ over 150 years.
-                \item Substantial uncertainty exists: range of \textbf{2.5°C to 3.6°C}.
-                \item Highlights significant tail risk in the absence of policy.
-            \end{itemize}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% --- Temperature (scenario 1) ---
-\begin{frame}{Appendix: Temperature (Scenario 1: Unconstrained)}
-\begin{columns}[c]
-    \begin{column}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.92\linewidth]{tax/Temp_case1.png}
-    \end{column}
-    \begin{column}{0.47\textwidth}
-        \small
-        \textbf{Outcomes:}
-        \begin{itemize}
-            \setlength\itemsep{0.8em}
-            \item \textbf{Aggressive Mitigation:} Stabilizes mean warming at \textbf{$\approx$2.7\,°C}.
-            \item \textbf{Tail-Risk Insurance:} The 99th percentile is capped at $\approx$3.1\,°C.
-            \item \textbf{The Mechanism:} Requires immediate, heavy taxation ($\approx$70\% average after 150 years).
-            \item \textbf{The Cost:} Imposes up to \textbf{$-$5\% welfare losses} on current older cohorts.
-        \end{itemize}
-    \end{column}
-\end{columns}
-\end{frame}
-
-% --- Emissions (welfare maximizing) ---
-\begin{frame}{Appendix: Emissions (Welfare Maximizing)}
-\begin{columns}[c]
-    \begin{column}{0.55\textwidth}
-        \centering
-        \includegraphics[width=0.92\linewidth]{tax/paper/lin_S_10trans_unif_emissions.pdf}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-        \small
-        \begin{itemize}
-            \setlength\itemsep{1em}
-            \item \textbf{Immediate Shock:} Emissions drop $\approx \mathbf{25\%}$ below BAU within the first 50 years.
-            \item \textbf{Eliminating the Extremes:} The policy successfully truncates the high-emission tail (the red shaded area).
-            \item \textbf{Convergence:} Post-2100, the gap narrows as exogenous carbon intensity declines naturally.
-        \end{itemize}
-    \end{column}
-\end{columns}
-\end{frame}
-
-% --- Emissions (Pareto) ---
-\begin{frame}{Appendix: Emissions: Mitigating Risk (Scenario 2)}
-\begin{columns}
-    \begin{column}{0.55\textwidth}
-        \begin{figure}[th!]
-            \centering
-            \includegraphics[width=0.92\linewidth]{tax/paper/lin_S_trans_emissions_dist.pdf}
-        \end{figure}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-        \footnotesize
-        \begin{itemize}
-             \setlength\itemsep{0.9em}
-            \item \textbf{Modest Average Reduction:} The mean emissions path is not drastically lower than BAU (required to preserve current consumption).
-            \item \textbf{Tail Truncation:} The policy's primary physical impact is eliminating the high-emissions upside.
-            \item \textbf{Result:} The $99^{th}$ percentile of emissions drops below $40~GtCO_2$ by 2070 (20 years earlier than BAU).
-        \end{itemize}
-    \end{column}
-\end{columns}
-\end{frame}
 
 % --- Sampling domain ---
 \begin{frame}[fragile]{Appendix: Sampling Domain}
@@ -1660,5 +1660,4 @@ where $\stoch{\tilde{f}_{t+1}} \sim \mathcal{N}\left( \mu_{f,t}, S_{f, t}, \unde
   \bibliographystyle{apalike}
 \end{frame}
 
-\backupend
 \end{document}
