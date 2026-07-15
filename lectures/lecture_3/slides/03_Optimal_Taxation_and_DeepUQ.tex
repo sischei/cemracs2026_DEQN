@@ -388,6 +388,79 @@ $\bm{\theta}$ = structural parameters (preferences, damages, climate sensitivity
 \vfill
 \end{frame}
 
+% --- Motivation: designing optimal policy ---
+\begin{frame}{Motivation: Designing Optimal Policy}
+\begin{itemize}
+    \setlength\itemsep{1.5em}
+    \item \textbf{The Consensus:} Carbon pricing is widely regarded as the most efficient tool to mitigate emissions.
+    \item \textbf{The Difficulty:} In a world with heterogeneous agents (e.g., OLG), simple taxes create winners and losers, threatening political feasibility.
+    \item \textbf{The Objective:} We need a systematic way to compute \keyc{constrained optimal taxes} that:
+    \begin{itemize}
+        \item Account for stochastic risks (tipping points).
+        \item Respect political constraints (Pareto improvements).
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+% --- The gap: welfare analysis in stochastic OLG IAMs ---
+\begin{frame}[fragile]{The Gap: Welfare Analysis in Stochastic OLG IAMs}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{tax/olg_agents.jpg}
+    \includegraphics[width=0.45\linewidth]{tax/quote.png}
+    \caption{Overlapping Generations.}
+\end{figure}
+
+\vspace{-0.2cm}
+
+\begin{itemize}\small
+    \setlength\itemsep{0.6em}
+    \item \textbf{Current Limitations:} Most climate-macro research relies on \keyc{simplifying assumptions} (e.g., representative agents) or heuristic ``guessing'' to find Pareto improvements.
+    \item \textbf{The Missing Tool:} A framework for \keyc{global solutions} in high-dimensional, stochastic environments that explicitly handles:
+    \begin{itemize}
+        \item \textbf{Heterogeneity:} Winners vs. Losers.
+        \item \textbf{Uncertainty:} Tipping points and damage shocks.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+% --- IAM primer ---
+\begin{frame}{Integrated Assessment Models (IAMs)}
+{\small Lecture 2's CDICE was one instantiation; here is the general recipe before we build a heterogeneous-agent one.}
+\begin{itemize}\small
+    \item Pioneered by Nordhaus (DICE, RICE): Quantitative, often numerical.
+    \item Key components:
+    \begin{itemize}
+        \item (Simplified) climate system.
+        \item (Stylized) economic model of emissions AND damages.
+    \end{itemize}
+    \item Economic model: needs to be dynamic, forward-looking, possibly allowing stochasticity (temperature variations, disasters, TFP), and potentially heterogeneous agents (``who is how impacted?'').
+\end{itemize}
+\vfill
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[>=stealth, node distance=2cm, scale=0.36, transform shape]
+    % Define style for the nodes
+    \tikzstyle{main node} = [circle, draw, minimum size=1cm, font=\sffamily\Large\bfseries]
+
+    % Nodes
+    \node[main node] (economy) at (0,0) {economy};
+    \node[main node] (climate) at (4,0) {climate};
+    \node[main node] (damages) at (2,-3.5) {damages};
+
+    % Arrows with labels
+    \draw[->] (economy) to[bend left=20] node[above] {CO$_2 \pm \sigma$} (climate);
+    \draw[->] (climate) to[bend left=20] node[right] {$\langle T \rangle \pm \sigma$} (damages);
+    \draw[->] (damages) to[bend left=20] node[left] {US \$ $\pm \sigma$} (economy);
+
+    % Triangle
+    \draw[dotted] (economy) -- (climate) -- (damages) -- (economy);
+\end{tikzpicture}
+\caption{Stylized representation of an IAM.}
+\label{fig:IAM_stylized}
+\end{figure}
+\end{frame}
+
 % --- Overview of the stochastic IAM ---
 \begin{frame}[fragile]{Overview of our Stochastic IAM}
 {\small A \emphc{different IAM} from Lecture 2's CDICE: heterogeneous agents and a lean climate block, built for policy design.}
@@ -456,41 +529,97 @@ Use $ \tilde U_t $ for welfare under taxation.
 \end{footnotesize}
 \end{frame}
 
-% --- Climate block ---
-\begin{frame}{Climate Block: TCRE and Tipping Damages}
+% --- Redistribution of tax income ---
+\begin{frame}[fragile]{Redistribution of Tax Income}
+\begin{itemize}
+    \item Each period's tax income is redistributed to currently alive agents.
+    \item In general, \keyc{transfer schemes may create winners and losers} \citep{kotlikoff2021making}.
+    \item Today: \keyc{2 examples of transfer policies.}
+    \begin{itemize}
+        \item \keyc{``10\% scheme''}: The youngest generation receives the highest share of total tax income, with each older generation getting 10\% less than the next younger generation. Formally: $\mathbb{T}_{t,j} = 0.9^{(j-1)} \cdot 0.1394 \cdot \tau_t e_t, \quad j \in \{2,...,12 \}$.
+        \vspace{0.5cm}
+        \item \keyc{Optimal transfers}: Optimal transfer shares to each generation alive in a given period (fixed at $t=0$).
+    \end{itemize}
+\end{itemize}
+\begin{itemize}
+    \vspace{0.5cm}
+    \item Normalization: Shares sum up to 1.
+\end{itemize}
+\end{frame}
+
+% --- Cumulative emissions and temperature ---
+\begin{frame}{Cumulative Carbon Emissions and Temperature}
 \footnotesize
-\begin{columns}[t]
-\column{0.52\textwidth}
-\textbf{Temperature: near-linear in cumulative emissions.}
-\begin{itemize}\itemsep1pt
-    \item Global mean temperature increase ($T^{AT}_t$) is proportional to cumulative CO$_2$ emissions ($E_s$):
-    \begin{equation}
-        \label{eq:agg_emission}
-        T^{AT}_t \approx \sigma_{CCR} \sum_{s=0}^{t} E_s
-    \end{equation}
-    \item The proportionality constant $\sigma_{CCR}$, the \keyc{Carbon-Climate Response (CCR) or TCRE}, \keyc{ranges from 1.0\,°C to 2.3\,°C per 1\,000 GtC}.
-    \item Efficient and widely used in IAMs; by itself it does not account for uncertainties in $\sigma_{CCR}$ nor for tipping points (cf.\ Dietz and Venmans, 2019).
+\textbf{Overview:} Climate science shows a near-linear link between cumulative CO$_2$ emissions and global temperature rise:
+\begin{itemize}
+    \item Global mean temperature increase ($T^{AT}_t$) is proportional to cumulative CO$_2$ emissions ($E_s$).
+    \item The proportionality constant $\sigma_{CCR}$, known as the \keyc{Carbon-Climate Response (CCR) or TCRE}, \keyc{ranges from 1.0\,°C to 2.3\,°C per 1\,000 GtC (0.27\,°C to 0.63\,°C per 1\,000 GtCO$_2$)}.
 \end{itemize}
-\begin{center}
-\vspace{-0.4em}
-\includegraphics[width=0.13\linewidth]{tax/TCRS.png}\\[-2pt]
-{\scriptsize Figure from IPCC 6.}
-\end{center}
-\column{0.44\textwidth}
-\textbf{Damages: stochastic climate tipping.}
-\begin{itemize}\itemsep1pt
-    \item Damages reduce output; stochastic tipping as in \cite{weitzman2012ghg,kotlikoffParetoimprovingCarbonriskTaxation2021a}: irreversible damage to the environment (e.g., \citealp{lenton2008tipping}).
-    \item Damage function:
-    \begin{center}
-    \resizebox{0.82\linewidth}{!}{$\displaystyle
-    \Omega_t \left( T_{ t} \right) =  \frac{1}{1 + \left(\frac{1}{\psi_1} T_{ t} \right)^{2} + \left( \frac{1}{2 \cdot TP_{t}} T_{ t} \right)^{6.754}}
-    $}
-    \end{center}
-    where $\psi_1$ is a damage parameter and $TP_t$ follows a random walk truncated at $TP_t \in [2.5, 3.5]$.
-    \item Once the temperature hits a tipping point, $TP_t$ stays at the given level.
-    \item Shock processes for $\kappa_t$ and $TP_t$: appendix.
-\end{itemize}
+
+\begin{columns}[c]
+    \column{0.4\textwidth}
+        \textbf{Equation:}
+        \begin{equation}
+            \label{eq:agg_emission}
+            T^{AT}_t \approx \sigma_{CCR} \sum_{s=0}^{t} E_s
+        \end{equation}
+    \column{0.52\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.28\linewidth]{tax/TCRS.png}
+            \caption{Figure from IPCC 6.}
+        \end{figure}
 \end{columns}
+
+\vspace{0.3em}
+\textbf{Implications:}
+\begin{itemize}
+    \item Equation~\eqref{eq:agg_emission} is efficient and widely used in integrated assessment models (IAMs).
+    \item It does not account for uncertainties in $\sigma_{CCR}$ nor for nonlinear effects such as potential tipping points (cf.\ Dietz and Venmans, 2019).
+\end{itemize}
+\end{frame}
+
+% --- Damage function ---
+\begin{frame}[fragile]{Damage Function}
+\begin{small}
+\begin{itemize}
+    \item Damages reduce output.
+    \item We include stochastic climate tipping as in \cite{weitzman2012ghg,kotlikoffParetoimprovingCarbonriskTaxation2021a}. Climate tipping is the occurrence of climate events that lead to irreversible damage to the environment (e.g., \citealp{lenton2008tipping}).
+    \item The damage function takes the following form:
+    \begin{equation}
+        \label{eq:damage_func_tipping}
+    \Omega_t \left( T_{ t} \right) =  \frac{1}{1 + \left(\frac{1}{\psi_1} T_{ t} \right)^{2} + \left( \frac{1}{2 \cdot TP_{t}} T_{ t} \right)^{6.754}}
+    \end{equation}
+    where $\psi_1$ is a damage parameter and $TP_t$ follows a random walk which is truncated at $TP_t \in [2.5, 3.5]$.
+    \item Once the temperature hits a tipping point, $TP_t$ stays at the given level.
+\end{itemize}
+\end{small}
+\end{frame}
+
+% --- Uncertainty: shock processes ---
+\begin{frame}[fragile]{Uncertainty}
+\small
+\begin{itemize}
+    \item $\kappa_t$ follows an AR(1) process $\kappa_t = \rho_t \kappa_{t-1} + \epsilon_{\kappa,t}$ with $\kappa_0 = 0.3502$ and $\rho_t =  \rho_0 + (\rho_\infty - \rho_0) (1-\exp(- \delta^\rho  5t))$.
+   \item $\epsilon_{\kappa,t}$ is discretized as:
+    \begin{equation}
+        \epsilon_{\kappa, t} =
+\begin{cases}
+0.03 & \text{with prob } 1/3, \\
+0.0 & \text{with prob } 1/3, \\
+- 0.03 & \text{with prob } 1/3.
+\end{cases}
+    \end{equation}
+    \item $TP_t$ follows a random walk $TP_t = TP_{t-1} + \epsilon_{TP,t}$ with $TP_0 = 3.0$, $\epsilon_{TP,t}$ is discretized as:
+    \begin{equation}
+        \epsilon_{TP, t} =
+\begin{cases}
+0.1 & \text{with prob } 1/3, \\
+0 & \text{with prob } 1/3, \\
+- 0.1 & \text{with prob } 1/3.
+\end{cases}
+    \end{equation}
+\end{itemize}
 \end{frame}
 
 % --- Equilibrium conditions ---
@@ -1303,32 +1432,6 @@ Tax replication code: \texttt{lectures/lecture\_3/code/}}
 % ============================================================================
 \appendix
 \backupbegin
-
-% --- Shock processes ---
-\begin{frame}[fragile]{Appendix: Uncertainty (Shock Processes)}
-\small
-\begin{itemize}
-    \item $\kappa_t$ follows an AR(1) process $\kappa_t = \rho_t \kappa_{t-1} + \epsilon_{\kappa,t}$ with $\kappa_0 = 0.3502$ and $\rho_t =  \rho_0 + (\rho_\infty - \rho_0) (1-\exp(- \delta^\rho  5t))$.
-   \item $\epsilon_{\kappa,t}$ is discretized as:
-    \begin{equation}
-        \epsilon_{\kappa, t} =
-\begin{cases}
-0.03 & \text{with prob } 1/3, \\
-0.0 & \text{with prob } 1/3, \\
-- 0.03 & \text{with prob } 1/3.
-\end{cases}
-    \end{equation}
-    \item $TP_t$ follows a random walk $TP_t = TP_{t-1} + \epsilon_{TP,t}$ with $TP_0 = 3.0$, $\epsilon_{TP,t}$ is discretized as:
-    \begin{equation}
-        \epsilon_{TP, t} =
-\begin{cases}
-0.1 & \text{with prob } 1/3, \\
-0 & \text{with prob } 1/3, \\
-- 0.1 & \text{with prob } 1/3.
-\end{cases}
-    \end{equation}
-\end{itemize}
-\end{frame}
 
 % --- Calibration ---
 \begin{frame}[fragile]{Appendix: Calibration}
